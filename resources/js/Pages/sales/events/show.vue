@@ -68,13 +68,13 @@
                                     :key="item.name"
                                     class="pa-1"
                                     :class="
-                                        'bg-' + rowsColor[indexRow].color + '-4'
+                                        'bg-' + rowsColor[`${item.name}`] + '-4'
                                     "
                                 >
                                     <td class="pa-1">
                                         <v-avatar
                                             :color="
-                                                rowsColor[indexRow].color + '-1'
+                                                rowsColor[`${item.name}`] + '-1'
                                             "
                                         >
                                             {{ item.name }}
@@ -121,6 +121,10 @@
             </v-window-item>
         </v-window>
 
+        <div class="calle">
+            <span> Av. Simon Bolivar </span>
+        </div>
+
         <v-container fluid>
             <v-row>
                 <v-col cols="12" md="8">
@@ -140,9 +144,7 @@
                                 <template #prepend>
                                     <v-avatar
                                         :color="
-                                            rowsColor.find(
-                                                (r) => r.row === item_.seat.row
-                                            ).color + '-1'
+                                            rowsColor[`${item_.seat.row}`]  + '-1'
                                         "
                                     >
                                         {{ item_.seat.name }}
@@ -171,51 +173,57 @@
                         />
 
                         <v-container>
-                            <v-row>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.customer.name"
-                                        label="Nombre"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.customer.last_name"
-                                        label="Apellidos"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-select
-                                        v-model="form.customer.document_type"
-                                        :items="type_documets"
-                                        label="Tipo de documento"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.customer.document_number"
-                                        label="Numero de documento"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.customer.email"
-                                        label="Correo"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field
-                                        v-model="form.customer.phone"
-                                        label="Telefono"
-                                        outlined
-                                    />
-                                </v-col>
-                            </v-row>
+                            <v-form ref="formRef">
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="form.customer.name"
+                                            label="Nombre"
+                                            :rules="rulesName"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="form.customer.last_name"
+                                            label="Apellidos"
+                                            :rules="rulesName"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-select
+                                            v-model="
+                                                form.customer.document_type
+                                            "
+                                            :items="type_documets"
+                                            label="Tipo de documento"
+                                            :rules="ruleRequired"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="
+                                                form.customer.document_number
+                                            "
+                                            label="Numero de documento"
+                                            :rules="rulesDocumentNumber"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="form.customer.email"
+                                            label="Correo"
+                                            :rules="ruleEmail"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="form.customer.phone"
+                                            label="Telefono"
+                                            :rules="rulePhone"
+                                        />
+                                    </v-col>
+                                </v-row>
+                            </v-form>
                         </v-container>
 
                         <v-card-text>
@@ -264,10 +272,7 @@
                 >
                     <template #prepend>
                         <v-avatar
-                            :color="
-                                rowsColor.find((r) => r.row === item_.seat.row)
-                                    .color + '-1'
-                            "
+                            :color="rowsColor[`${item_.seat.row}`] + '-1'"
                         >
                             {{ item_.seat.name }}
                         </v-avatar>
@@ -336,104 +341,53 @@ const form = ref({
     seats: [],
 });
 
-const seatsSelected = ref([]);
-
-const rowsColor = [
-    {
-        row: "A",
-        color: "red-lighten",
-    },
-    {
-        row: "B",
-        color: "indigo-lighten",
-    },
-    {
-        row: "C",
-        color: "blue-lighten",
-    },
-    {
-        row: "D",
-        color: "cyan-lighten",
-    },
-    {
-        row: "E",
-        color: "teal-lighten",
-    },
-    {
-        row: "F",
-        color: "green-lighten",
-    },
-    {
-        row: "G",
-        color: "lime-lighten",
-    },
-    {
-        row: "H",
-        color: "grey-lighten",
-    },
-    {
-        row: "I",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "J",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "K",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "L",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "M",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "N",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "O",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "P",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "Q",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "R",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "S",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "T",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "U",
-        color: "bg-blue-grey-lighten-5",
-    },
-    {
-        row: "V",
-        color: "bg-grey-lighten-4",
-    },
-    {
-        row: "W",
-        color: "bg-blue-grey-lighten-5",
-    },
+const rulesName = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 100) || "Maximo 100 caracteres",
+];
+const rulesDocumentNumber = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 15) || "Maximo 15 caracteres",
+    (v) => (v && v.length >= 8) || "Minimo 8 caracteres",
+    (v) => /^[0-9]+$/.test(v) || "Solo numeros",
+];
+const ruleEmail = [
+    (v) => !!v || "El campo es requerido",
+    (v) => /.+@.+\..+/.test(v) || "Correo invalido",
 ];
 
-const registerSale = () => {
+const rulePhone = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 15) || "Maximo 15 caracteres",
+    (v) => (v && v.length >= 9) || "Minimo 9 caracteres",
+    (v) => /^[0-9]+$/.test(v) || "Solo numeros",
+];
+
+const ruleRequired = [(v) => !!v || "El campo es requerido"];
+
+const seatsSelected = ref([]);
+
+const rowsColor = {
+    A: "blue-lighten",
+    B: "blue-lighten",
+    C: "green-lighten",
+    D: "green-lighten",
+    E: "yellow-lighten",
+    F: "green-lighten",
+    G: "lime-lighten",
+    H: "grey-lighten",
+};
+
+const registerSale = async () => {
+    //validar si hay asientos seleccionados
+    if (seatsSelected.value.length === 0) {
+        alert("Debe seleccionar al menos un asiento");
+        return;
+    }
+
+    const { valid } = await formRef.value.validate();
+    if (!valid) return;
+
     form.value.seats = seatsSelected.value.map((s) => s.id);
     saleConfirmModal.value = true;
 };
@@ -461,7 +415,9 @@ const onSeatSelected = (grandstand, seat) => {
     }
 };
 
-const submit = () => {
+const formRef = ref(null);
+
+const submit = async () => {
     router.post("/sa/sales", form.value, {
         onSuccess: () => {
             saleConfirmModal.value = false;

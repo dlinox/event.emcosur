@@ -131,7 +131,7 @@
 import SalesLayout from "@/layouts/SalesLayout.vue";
 import { router } from "@inertiajs/vue3";
 import DialogConfirm from "@/components/DialogConfirm.vue";
-import { defineProps, ref } from "vue";
+import {  ref } from "vue";
 const props = defineProps({
     salesPending: Array,
     events: Array,

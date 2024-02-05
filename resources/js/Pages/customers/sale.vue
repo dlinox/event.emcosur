@@ -44,7 +44,7 @@
                                     <small>Ocupado</small>
                                 </v-chip>
 
-                                <v-chip class="ma-1" color="primary" label>
+                                <v-chip class="ms-1" color="primary" label>
                                     <v-icon
                                         start
                                         color="warning"
@@ -53,7 +53,7 @@
                                     <small>Reservado</small>
                                 </v-chip>
 
-                                <v-chip class="ma-1" color="primary" label>
+                                <v-chip class="ms-1" color="primary" label>
                                     <v-icon
                                         start
                                         color="primary"
@@ -62,7 +62,7 @@
                                     <small>Seleccionado</small>
                                 </v-chip>
 
-                                <v-chip class="ma-1" color="primary" label>
+                                <v-chip class="ms-1" color="primary" label>
                                     <v-icon
                                         start
                                         color="primary"
@@ -111,6 +111,22 @@
                                                     : onSeatSelected(tab_, seat)
                                             "
                                         >
+                                            <v-tooltip
+                                                activator="parent"
+                                                location="top"
+                                            >
+                                            <p>
+
+                                              <b>Precio:</b>  S/. {{ seat.price }}
+                                            </p>
+                                            <p>
+
+                                                <b>Estado</b> {{seat.status === 'sold' ? 'Vendido' : seat.status === 'reserved' ? 'Reservado' : seat.status === 'selected' ? 'Seleccionado' : 'Disponible'}}
+                                            </p>
+                                        
+                                        
+                                            </v-tooltip>
+
                                             <small>{{ seat.name }}</small>
                                         </v-btn>
                                     </td>
@@ -181,51 +197,58 @@
                         <v-toolbar title="Datos personales" density="compact" />
 
                         <v-container>
-                            <v-row>
-                                <v-col cols="12" md="6">
-                                    <v-text-field
-                                        v-model="form.customer.name"
-                                        label="Nombre"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-text-field
-                                        v-model="form.customer.last_name"
-                                        label="Apellidos"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-select
-                                        v-model="form.customer.document_type"
-                                        :items="type_documets"
-                                        label="Tipo de documento"
-                                        :clearable="false"
-                                    />
-                                </v-col>
-                                <v-col cols="8">
-                                    <v-text-field
-                                        v-model="form.customer.document_number"
-                                        label="Numero de documento"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-text-field
-                                        v-model="form.customer.email"
-                                        label="Correo"
-                                        outlined
-                                    />
-                                </v-col>
-                                <v-col cols="12" md="6">
-                                    <v-text-field
-                                        v-model="form.customer.phone"
-                                        label="Telefono"
-                                        outlined
-                                    />
-                                </v-col>
-                            </v-row>
+                            <v-form ref="formPersonal">
+                                <v-row>
+                                    <v-col cols="12" md="6">
+                                        <v-text-field
+                                            v-model="form.customer.name"
+                                            label="Nombre"
+                                            :rules="rulesName"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12" md="6">
+                                        <v-text-field
+                                            v-model="form.customer.last_name"
+                                            label="Apellidos"
+                                            :rules="rulesName"
+                                        />
+                                    </v-col>
+                                    <v-col cols="4">
+                                        <v-select
+                                            v-model="
+                                                form.customer.document_type
+                                            "
+                                            :items="type_documets"
+                                            label="Tipo de documento"
+                                            :clearable="false"
+                                            :rules="ruleRequired"
+                                        />
+                                    </v-col>
+                                    <v-col cols="8">
+                                        <v-text-field
+                                            v-model="
+                                                form.customer.document_number
+                                            "
+                                            label="Numero de documento"
+                                            :rules="rulesDocumentNumber"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12" md="6">
+                                        <v-text-field
+                                            v-model="form.customer.email"
+                                            label="Correo"
+                                            :rules="ruleEmail"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12" md="6">
+                                        <v-text-field
+                                            v-model="form.customer.phone"
+                                            label="Telefono"
+                                            :rules="rulePhone"
+                                        />
+                                    </v-col>
+                                </v-row>
+                            </v-form>
                         </v-container>
 
                         <v-toolbar
@@ -240,7 +263,7 @@
                                     dark
                                 >
                                     <v-tab value="card"> Tranferencia</v-tab>
-                                    <v-tab value="yape"> Yape</v-tab>
+                                    <!-- <v-tab value="yape"> Yape</v-tab> -->
                                 </v-tabs>
                             </template>
                         </v-toolbar>
@@ -250,7 +273,7 @@
                                     <v-row>
                                         <v-col cols="12">
                                             <v-text-field
-                                                label="Numero de celular"
+                                                label="Número de celular"
                                             />
                                         </v-col>
                                         <v-col cols="12">
@@ -261,87 +284,87 @@
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item value="card">
-                                    <v-row class="mt-3">
-                                        <v-col cols="12" md="6">
-                                            <v-select
-                                                v-model="form.payment_bank"
-                                                :items="bankItems"
-                                                label="Banco"
-                                                variant="outlined"
-                                                density="compact"
-                                            ></v-select>
-                                        </v-col>
+                                    <v-form ref="formPaymentTransaction">
+                                        <v-row class="mt-3">
+                                            <v-col cols="12" md="6">
+                                                <v-select
+                                                    v-model="form.payment_bank"
+                                                    :items="bankItems"
+                                                    label="Banco"
+                                                    :rules="ruleRequired"
+                                                ></v-select>
+                                            </v-col>
 
-                                        <v-col cols="12" md="6">
-                                            <v-text-field
-                                                v-model="
-                                                    form.payment_transaction_id
-                                                "
-                                                variant="outlined"
-                                                density="compact"
-                                                label="Serie / Número de transaccion"
-                                            />
-                                        </v-col>
-                                        <v-col cols="12" md="4">
-                                            <v-text-field
-                                                v-model="form.payment_amount"
-                                                variant="outlined"
-                                                density="compact"
-                                                label="Monto"
-                                            />
-                                        </v-col>
-                                        <v-col cols="12" md="8">
-                                            <v-text-field
-                                                v-model="form.payment_date"
-                                                variant="outlined"
-                                                density="compact"
-                                                label="Feha de pago"
-                                                type="date"
-                                            />
-                                        </v-col>
-
-                                        <v-col cols="12" md="12">
-                                            <v-card variant="tonal">
-                                                <CropCompressImage
-                                                    :aspect-ratio="21 / 9"
-                                                    @onCropper="
-                                                        (previewImg =
-                                                            $event.blob),
-                                                            (form.payment_image =
-                                                                $event.file)
+                                            <v-col cols="12" md="6">
+                                                <v-text-field
+                                                    v-model="
+                                                        form.payment_transaction_id
                                                     "
+                                                    label="Serie / Número de transaccion"
+                                                    :rules="rulesTransactionId"
                                                 />
-
-                                                <v-img
-                                                    v-if="previewImg"
-                                                    class="mx-auto"
-                                                    :width="300"
-                                                    aspect-ratio="16/9"
-                                                    cover
-                                                    :src="previewImg"
-                                                ></v-img>
-
-                                                <v-img
-                                                    v-if="
-                                                        form.payment_image &&
-                                                        !previewImg
+                                            </v-col>
+                                            <v-col cols="12" md="4">
+                                                <v-text-field
+                                                    v-model="
+                                                        form.payment_amount
                                                     "
-                                                    class="mx-auto"
-                                                    :width="300"
-                                                    aspect-ratio="16/9"
-                                                    cover
-                                                    :src="form.image_url"
-                                                ></v-img>
-                                            </v-card>
-                                        </v-col>
-                                    </v-row>
+                                                    label="Monto"
+                                                    :rules="rulesAmount"
+                                                />
+                                            </v-col>
+                                            <v-col cols="12" md="8">
+                                                <v-text-field
+                                                    v-model="form.payment_date"
+                                                    label="Feha de pago"
+                                                    type="date"
+                                                    :rules="ruleRequired"
+                                                />
+                                            </v-col>
+
+                                            <v-col cols="12" md="12">
+                                                <v-card variant="tonal">
+                                                    <CropCompressImage
+                                                        :aspect-ratio="21 / 9"
+                                                        @onCropper="
+                                                            (previewImg =
+                                                                $event.blob),
+                                                                (form.payment_image =
+                                                                    $event.file)
+                                                        "
+                                                    />
+
+                                                    <v-img
+                                                        v-if="previewImg"
+                                                        class="mx-auto"
+                                                        :width="300"
+                                                        aspect-ratio="16/9"
+                                                        cover
+                                                        :src="previewImg"
+                                                    ></v-img>
+
+                                                    <v-img
+                                                        v-if="
+                                                            form.payment_image &&
+                                                            !previewImg
+                                                        "
+                                                        class="mx-auto"
+                                                        :width="300"
+                                                        aspect-ratio="16/9"
+                                                        cover
+                                                        :src="form.image_url"
+                                                    ></v-img>
+                                                </v-card>
+                                            </v-col>
+                                        </v-row>
+                                    </v-form>
                                 </v-window-item>
                             </v-window>
                         </v-container>
 
                         <v-card-text>
                             <v-list-item
-                                class="text-end"
+                                class="text-end "
                                 :title="`Total: S/. ${seatsSelected.reduce(
                                     (acc, ee) =>
                                         acc + parseFloat(ee.seat.price),
@@ -431,6 +454,42 @@ const props = defineProps({
     grandstandId: [String, Number],
 });
 
+const rulesName = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 100) || "Maximo 100 caracteres",
+];
+const rulesDocumentNumber = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 15) || "Maximo 15 caracteres",
+    (v) => (v && v.length >= 8) || "Minimo 8 caracteres",
+    (v) => /^[0-9]+$/.test(v) || "Solo numeros",
+];
+const ruleEmail = [
+    (v) => !!v || "El campo es requerido",
+    (v) => /.+@.+\..+/.test(v) || "Correo invalido",
+];
+
+const rulePhone = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 15) || "Maximo 15 caracteres",
+    (v) => (v && v.length >= 9) || "Minimo 9 caracteres",
+    (v) => /^[0-9]+$/.test(v) || "Solo numeros",
+];
+
+const rulesTransactionId = [
+    (v) => !!v || "El campo es requerido",
+    (v) => (v && v.length <= 15) || "Maximo 20 caracteres",
+    (v) => (v && v.length >= 4) || "Minimo 4 caracteres",
+    (v) => /^[0-9]+$/.test(v) || "Solo numeros",
+];
+
+const rulesAmount = [
+    (v) => !!v || "El campo es requerido",
+    (v) => /^[0-9]+(\.[0-9]{1,2})?$/.test(v) || "Solo numeros",
+];
+
+const ruleRequired = [(v) => !!v || "El campo es requerido"];
+
 const tempRows = ref([]);
 
 const statusSeat = {
@@ -455,6 +514,9 @@ const type_documets = [
 ];
 
 const previewImg = ref(null);
+
+const formPersonal = ref(null);
+const formPaymentTransaction = ref(null);
 const form = ref({
     payment_type: "online",
     payment_method: null,
@@ -489,24 +551,28 @@ const rowsColor = {
     F: "green-lighten",
     G: "lime-lighten",
     H: "grey-lighten",
-    I: "bg-blue-grey-lighten-5",
-    J: "bg-grey-lighten-4",
-    K: "bg-blue-grey-lighten-5",
-    L: "bg-grey-lighten-4",
-    M: "bg-blue-grey-lighten-5",
-    N: "bg-grey-lighten-4",
-    O: "bg-blue-grey-lighten-5",
-    P: "bg-grey-lighten-4",
-    Q: "bg-blue-grey-lighten-5",
-    R: "bg-grey-lighten-4",
-    S: "bg-blue-grey-lighten-5",
-    T: "bg-grey-lighten-4",
-    U: "bg-blue-grey-lighten-5",
-    V: "bg-grey-lighten-4",
-    W: "bg-blue-grey-lighten-5",
 };
 
-const registerSale = () => {
+
+const registerSale = async () => {
+    //validar si hay asientos seleccionados
+    if (!seatsSelected.value.length) {
+        alert("Debe seleccionar al menos un asiento");
+        return;
+    }
+
+    const { valid } = await formPersonal.value.validate();
+    if (!valid) return;
+
+    const { valid: validPayment } =
+        await formPaymentTransaction.value.validate();
+    if (!validPayment) return;
+
+    if (!form.value.payment_image) {
+        alert("Debe subir una imagen de la transaccion");
+        return;
+    }
+
     form.value.seats = seatsSelected.value.map((s) => s.id);
     form.value.payment_method = tabPayment.value;
     form.value.total = seatsSelected.value.reduce(
@@ -521,11 +587,6 @@ const removeSeat = (seat) => {
 };
 
 const onSeatSelected = (grandstand, seat) => {
-    if (seatsSelected.value.length === limit.value) {
-        alert("Limite de asientos seleccionados");
-        return;
-    }
-
     const seatSelected = seatsSelected.value.find((s) => s.id === seat.id);
 
     if (seatSelected) {
@@ -535,6 +596,11 @@ const onSeatSelected = (grandstand, seat) => {
 
         seat.status = "available";
     } else {
+        if (seatsSelected.value.length === limit.value) {
+            alert("Limite de asientos seleccionados");
+            return;
+        }
+
         seatsSelected.value.push({
             id: seat.id,
             grandstand: {
@@ -549,7 +615,7 @@ const onSeatSelected = (grandstand, seat) => {
     }
 };
 
-const submit = () => {
+const submit = async () => {
     router.post("/sales", form.value, {
         onSuccess: () => {
             saleConfirmModal.value = false;

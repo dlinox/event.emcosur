@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('last_name');
+            $table->string('name', 100);
+            $table->string('last_name', 100);
             $table->enum('document_type', ['DNI', 'RUC', 'CE', 'PASSPORT'])->default('DNI');
-            $table->string('document_number');
-            $table->string('email');
-            $table->char('phone');
+            $table->string('document_number', 15);
+            $table->string('email', 120);
+            $table->char('phone', 20);
             $table->string('place_of_residence')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

@@ -70,7 +70,7 @@
                                 {{ event.description }}
                             </v-card-text>
 
-                            <v-img src="/images/combos.png"></v-img>
+                            <img src="/images/combos.png" width="100%" />
 
                             <v-card-actions>
                                 <v-btn
@@ -134,7 +134,7 @@
 
         <v-dialog width="700" v-model="dialog">
             <v-card title="Seleccione una tribuna ">
-                <v-img src="/images/tribunas.png" width="100%"></v-img>
+                <img src="/images/tribunas.png" width="100%" />
                 <v-card-text>
                     <v-list-item
                         v-for="grandstand in eventSelected.grandstands"
@@ -177,7 +177,7 @@ import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import Header from "./components/Header.vue";
 import HeroSlider from "./components/HeroSlider.vue";
-import FlayerSlider from "./components/FlayerSlider.vue";
+import FlayerSlider from "@/Pages/customers/components/FlayerSlider.vue";
 
 const props = defineProps({
     events: Array,

@@ -174,6 +174,8 @@
 														<tr>
 															<td class="pad" style="padding-bottom:10px;padding-top:10px;text-align:center;width:100%;">
 																<h1 style="margin: 0; color: #000000; direction: ltr; font-family: 'Noto Serif', Georgia, serif; font-size: 30px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 36px;"><span class="tinyMce-placeholder">Festividad de la Virgen de la Candelaria</span></h1>
+															
+																<img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(256)->generate('https://google.com')) !!} ">
 															</td>
 														</tr>
 													</table>

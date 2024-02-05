@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmMail;
 use App\Models\Customer;
+use App\Models\Event;
+use App\Models\Grandstand;
 use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Seat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SaleController extends Controller
 {
@@ -33,9 +38,9 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
 
         try {
-            DB::beginTransaction();
 
             $customer = Customer::create($request->customer);
 
@@ -51,6 +56,8 @@ class SaleController extends Controller
             ]);
 
 
+            $grandstandsIDs = [];
+
             foreach ($request->seats as $seat) {
 
                 SaleDetail::create([
@@ -58,6 +65,10 @@ class SaleController extends Controller
                     'sale_id' => $sale->id,
                 ]);
                 $seat = Seat::find($seat);
+
+                if (!in_array($seat->grandstand_id, $grandstandsIDs)) {
+                    $grandstandsIDs[] = $seat->grandstand_id;
+                }
                 //validar que no este vendido o reservado
                 if ($seat->status != 'available') {
                     throw new \Exception('El asiento ' . $seat->name . ' ya fue vendido o reservado');
@@ -66,6 +77,34 @@ class SaleController extends Controller
                 $seat->status = 'sold';
                 $seat->save();
             }
+
+            $event = Event::select()->where('id', $request->event)->first();
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+                ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
+                ->whereIn('grandstands.id', $grandstandsIDs)
+                ->whereIn('seats.id', $request->seats)
+                ->groupBy('grandstands.id')
+                ->get();
+
+
+            $dataMail = [
+                'event' => $event,
+                'customer' => $customer,
+                'grandstands' => $grandstands,
+            ];
+
+            //encriptar el id de la venta
+            $saleHash = encrypt($sale->id);
+
+            //crear qr de la venta
+            $qrCode = QrCode::size(200)->generate($saleHash);
+            // $base64Image = 'data:image/png;base64,' . base64_encode($qrCode);
+            //qr envial al correo
+            $dataMail['qrCode'] = $qrCode;
+
+            //email email de confirmacion, se envia al cliente, 
+            $mail = new ConfirmMail($dataMail);
+            Mail::to($customer->email)->send($mail);
 
             DB::commit();
             return redirect()->back()->with('success', 'Venta realizada con exito');

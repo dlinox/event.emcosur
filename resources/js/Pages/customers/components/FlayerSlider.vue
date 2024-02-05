@@ -7,7 +7,7 @@
                 :key="index"
                 class="swiper-slide"
             >
-                <v-img :src="image" />
+                <img width="100%" :src="image" />
             </swiper-slide>
         </swiper>
     </div>
@@ -27,6 +27,8 @@ const modules = [Autoplay];
 const images = [
     "/images/flayers/f2.png",
     "/images/flayers/f1.png",
-    "/images/flayers/f3.jpeg",
+    "/images/flayers/f4.png",
+    "/images/flayers/f5.png",
+    "/images/flayers/f6.png",
 ];
 </script>
