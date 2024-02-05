@@ -48,11 +48,7 @@ $table->string('name');
     public function getDateAttribute($value)
     {
         //fecha en español
-
         setlocale(LC_TIME, 'es_ES.UTF-8');
-
-
-
         return \Carbon\Carbon::parse($value)->format('d \d\e F \d\e Y');
     }
 

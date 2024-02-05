@@ -115,16 +115,24 @@
                                                 activator="parent"
                                                 location="top"
                                             >
-                                            <p>
-
-                                              <b>Precio:</b>  S/. {{ seat.price }}
-                                            </p>
-                                            <p>
-
-                                                <b>Estado</b> {{seat.status === 'sold' ? 'Vendido' : seat.status === 'reserved' ? 'Reservado' : seat.status === 'selected' ? 'Seleccionado' : 'Disponible'}}
-                                            </p>
-                                        
-                                        
+                                                <p>
+                                                    <b>Precio:</b> S/.
+                                                    {{ seat.price }}
+                                                </p>
+                                                <p>
+                                                    <b>Estado</b>
+                                                    {{
+                                                        seat.status === "sold"
+                                                            ? "Vendido"
+                                                            : seat.status ===
+                                                              "reserved"
+                                                            ? "Reservado"
+                                                            : seat.status ===
+                                                              "selected"
+                                                            ? "Seleccionado"
+                                                            : "Disponible"
+                                                    }}
+                                                </p>
                                             </v-tooltip>
 
                                             <small>{{ seat.name }}</small>
@@ -364,7 +372,7 @@
 
                         <v-card-text>
                             <v-list-item
-                                class="text-end "
+                                class="text-end"
                                 :title="`Total: S/. ${seatsSelected.reduce(
                                     (acc, ee) =>
                                         acc + parseFloat(ee.seat.price),
@@ -391,13 +399,16 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-dialog v-model="saleConfirmModal" max-width="400" persistent>
+        <v-dialog v-model="saleConfirmModal" max-width="600" persistent>
             <v-card>
                 <v-card-title class="headline"> Confirmar compra</v-card-title>
                 <v-card-text>
                     <v-alert variant="tonal" type="info" class="mb-2">
-                        Al realizar la compra no podra deshacer la accion, no se
-                        podra devolver el dinero
+                        ¡Gracias por tu compra! la estamos procesando, en breve le
+                        lleagará un correo con los detalles de su compra, no olvides revisar tu bandeja de spam.
+                        <br>
+                        Al realizar la compra no podra
+                        deshacer la accion, no se podra devolver el dinero.
                     </v-alert>
                 </v-card-text>
                 <v-list-item
@@ -553,7 +564,6 @@ const rowsColor = {
     H: "grey-lighten",
 };
 
-
 const registerSale = async () => {
     //validar si hay asientos seleccionados
     if (!seatsSelected.value.length) {
@@ -659,7 +669,6 @@ const mapRows = (tab_) => {
     tempRows.value = [...rows.value];
 
     rows.value.reverse();
-
 };
 
 const init = () => {

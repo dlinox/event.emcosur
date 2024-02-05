@@ -176,10 +176,7 @@
                                         </v-col>
 
                                         <v-col cols="12">
-                                            <v-btn
-                                                block
-                                                @click="submit()"
-                                            >
+                                            <v-btn block @click="submit()">
                                                 Guardar Evento
                                             </v-btn>
                                         </v-col>
@@ -229,8 +226,34 @@ const form = ref({
             name: "",
             capacity: "",
             rows: {
-                capacity: 0,
-                seats: [],
+                capacity: 5,
+                seats: [
+                    {
+                        row: "A",
+                        capacity: 56,
+                        price: 120,
+                    },
+                    {
+                        row: "B",
+                        capacity: 56,
+                        price: 120,
+                    },
+                    {
+                        row: "C",
+                        capacity: 56,
+                        price: 100,
+                    },
+                    {
+                        row: "D",
+                        capacity: 56,
+                        price: 100,
+                    },
+                    {
+                        row: "E",
+                        capacity: 56,
+                        price: 90,
+                    },
+                ],
             },
         },
     ],

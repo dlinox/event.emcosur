@@ -20,11 +20,19 @@ class UserSeeder extends Seeder
                 'password' => 'password',
             ],
             [
-                'name' => 'Sales',
+                'name' => 'Sales01',
                 'role' => 'sales',
-                'email' => 'sales@gmail.com',
-                'password' => 'password',
+                'email' => 'sales01@gmail.com',
+                'password' => 'DDfEdSD#dda',
             ],
+
+            [
+                'name' => 'Sales02',
+                'role' => 'sales',
+                'email' => 'sales02@gmail.com',
+                'password' => 'p@ssWord',
+            ],
+
             [
                 'name' => 'Control',
                 'role' => 'control',

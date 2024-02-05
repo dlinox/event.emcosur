@@ -185,7 +185,7 @@ class SaleController extends Controller
             Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
 
             DB::commit();
-            return redirect()->back()->with('success', 'Su compra se realizo con exito');
+            return redirect()->back()->with('success', '¡Gracias por tu compra! la estamos procesando, en breve le lleagará un correo con los detalles de su compra, no olvides revisar tu bandeja de spam.');
         } catch (\Throwable $th) {
 
             DB::rollBack();
