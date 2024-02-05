@@ -5,6 +5,42 @@
             src="/banner.png"
             gradient="to top right, rgba(0,0,0,.2), rgba(0,0,0,.1)"
         ></v-img>
+
+        <v-card rounded="0">
+            <v-row class="row">
+                <v-col
+                    cols="12"
+                    sm="6"
+                    md="3"
+                    v-for="bank in bankAccounts"
+                    :key="bank.name"
+                >
+                    <v-card
+                        color="transparent"
+                        elevation="0"
+                        density="compact"
+                        class="border-e"
+                        rounded="0"
+                    >
+                        <div class="d-flex flex-no-wrap justify-space-between">
+                            <div>
+                                <v-card-subtitle class="mt-3">
+                                    {{ bank.name }}
+                                </v-card-subtitle>
+                                <v-card-title class="">
+                                    <small>
+                                        {{ bank.account }}
+                                    </small>
+                                </v-card-title>
+                            </div>
+                            <v-avatar class="ma-3" size="50" rounded="1">
+                                <v-img :src="bank.img"></v-img>
+                            </v-avatar>
+                        </div>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-card>
         <v-toolbar :title="item?.name" rounded="0" extended color="primary">
             <template #extension>
                 <v-tabs v-model="tab" background-color="primary" dark>
@@ -400,15 +436,12 @@
             </v-row>
         </v-container>
         <v-dialog v-model="saleConfirmModal" max-width="600" persistent>
-            <v-card>
+            <v-card :loading="loadingSubmit">
                 <v-card-title class="headline"> Confirmar compra</v-card-title>
                 <v-card-text>
                     <v-alert variant="tonal" type="info" class="mb-2">
-                        ¡Gracias por tu compra! la estamos procesando, en breve le
-                        lleagará un correo con los detalles de su compra, no olvides revisar tu bandeja de spam.
-                        <br>
-                        Al realizar la compra no podra
-                        deshacer la accion, no se podra devolver el dinero.
+                        Al realizar la compra no podra deshacer la accion, no se
+                        podra devolver el dinero.
                     </v-alert>
                 </v-card-text>
                 <v-list-item
@@ -435,7 +468,12 @@
                 </v-list-item>
 
                 <v-card-actions class="">
-                    <v-btn color="primary" block @click="submit">
+                    <v-btn
+                        color="primary"
+                        block
+                        @click="submit"
+                        :loading="loadingSubmit"
+                    >
                         GUARDAR
                     </v-btn>
                 </v-card-actions>
@@ -445,11 +483,21 @@
                         color="error"
                         block
                         variant="tonal"
+                        :disabled="loadingSubmit"
                         @click="saleConfirmModal = false"
                     >
                         CANCELAR
                     </v-btn>
                 </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="finishBuy" max-width="400">
+            <v-card>
+                <v-alert type="info">
+                    ¡Gracias por tu compra! la estamos procesando, en breve le
+                    lleagará un correo con los detalles de su compra, no olvides
+                    revisar tu bandeja de spam.
+                </v-alert>
             </v-card>
         </v-dialog>
     </CustomerLayout>
@@ -464,6 +512,33 @@ const props = defineProps({
     item: Object,
     grandstandId: [String, Number],
 });
+
+const finishBuy = ref(false);
+
+const bankAccounts = [
+    {
+        name: "Interbank",
+        account: "3203005826685",
+        img: "/images/banks/interbank.png",
+    },
+    {
+        name: "BCP",
+        account: "4952208589077",
+        img: "/images/banks/bcp.png",
+    },
+    {
+        name: "BBVA",
+        account: "001102290100126813",
+        img: "/images/banks/bbva.png",
+    },
+    {
+        name: "YAPE",
+        account: "986868650",
+        img: "/images/banks/yape.jpg",
+    },
+];
+
+//payment_amount =  al total
 
 const rulesName = [
     (v) => !!v || "El campo es requerido",
@@ -533,7 +608,7 @@ const form = ref({
     payment_method: null,
     payment_date: "",
     payment_transaction_id: "",
-    payment_amount: "",
+    payment_amount: 0,
     payment_image: "",
     payment_bank: "",
 
@@ -621,12 +696,23 @@ const onSeatSelected = (grandstand, seat) => {
             seat: seat,
         });
 
+        //sumar a form.payment_amount
+        form.value.payment_amount = seatsSelected.value.reduce(
+            (acc, ee) => acc + parseFloat(ee.seat.price),
+            0
+        );
+
         seat.status = "selected";
     }
 };
 
+const loadingSubmit = ref(false);
+
 const submit = async () => {
     router.post("/sales", form.value, {
+        onStart: () => {
+            loadingSubmit.value = true;
+        },
         onSuccess: () => {
             saleConfirmModal.value = false;
             form.value = {
@@ -644,7 +730,15 @@ const submit = async () => {
 
             mapRows(tab.value);
             seatsSelected.value = [];
+            finishBuy.value = true;
         },
+        onError: (error) => {
+            alert("Ocurrio un error al realizar la compra");
+        },
+        onFinish: () => {
+            loadingSubmit.value = false;
+        },
+        preserveScroll: false,
     });
 };
 

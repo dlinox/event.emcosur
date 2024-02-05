@@ -233,33 +233,7 @@ const form = ref({
             capacity: "2",
             rows: {
                 capacity: 5,
-                seats: [
-                    {
-                        row: "A",
-                        capacity: 56,
-                        price: 120,
-                    },
-                    {
-                        row: "B",
-                        capacity: 56,
-                        price: 120,
-                    },
-                    {
-                        row: "C",
-                        capacity: 56,
-                        price: 100,
-                    },
-                    {
-                        row: "D",
-                        capacity: 56,
-                        price: 100,
-                    },
-                    {
-                        row: "E",
-                        capacity: 56,
-                        price: 90,
-                    },
-                ],
+                seats: [],
             },
         },
     ],

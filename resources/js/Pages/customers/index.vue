@@ -96,47 +96,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-                <!-- <v-row no-gutters>
-                    <v-col md="6">
-                        <v-card
-                            variant="tonal"
-                            theme="dark"
-                            rounded="0"
-                            title="¿Como comprar 100%?"
-                        >
-                            <iframe
-                                width="100%"
-                                height="400"
-                                src="https://www.youtube.com/embed/Z7SkA8NALrE?si=gT1YPZhSA1RDEj10"
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
-                            ></iframe>
-                        </v-card>
-                    </v-col>
-
-                    <v-col md="6">
-                        <v-card
-                            variant="tonal"
-                            theme="dark"
-                            rounded="0"
-                            title="¿Como comprar 100%?"
-                        >
-                            <iframe
-                                width="100%"
-                                height="400"
-                                src="https://www.youtube.com/embed/1ow3EC56PAM?si=wecZ1yPpJVK8D2NP"
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
-                            ></iframe>
-                        </v-card>
-                    </v-col>
-                </v-row> -->
-
-
+       
             <Footer />
         
         </v-main>

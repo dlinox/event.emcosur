@@ -41,6 +41,13 @@
                         fileExt="png"
                         myclass="my-qur"
                         imgclass="img-qr"
+                        download="qr-code.png"
+                        download-button="true"
+                        
+                        :download-options="{
+                            name: 'qr-code',
+                            extension: 'png',
+                        }"
                     />
                 </v-card-text>
             </v-card>
@@ -55,4 +62,11 @@ const props = defineProps({
     hash: [String],
 });
 </script>
-<style></style>
+<style lang="scss">
+.true {
+    width: 100%;
+    padding: 20px;
+    background-color: #AAA;
+    color: white;
+}
+</style>

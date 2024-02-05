@@ -40,6 +40,7 @@
                                 <th class="text-left">Nombre</th>
                                 <th class="text-left">Pago</th>
                                 <th class="text-left">Fecha</th>
+                                <th class="text-left">Dia</th>
                                 <th class="text-left">Revisar</th>
                             </tr>
                         </thead>
@@ -54,6 +55,7 @@
                                     {{ item.payment_bank }}
                                 </td>
                                 <td>{{ item.payment_date }}</td>
+                                <td>{{ item.name }}</td>
 
                                 <td>
                                     <v-btn @click="reviewSale(item)"
@@ -97,6 +99,18 @@
                                 title="Monto"
                                 :subtitle="itemReview.payment_amount"
                             ></v-list-item>
+                       
+                            <v-list-item
+                                title="Nombres"
+                                :subtitle="itemReview.customer.name + ' ' + itemReview.customer.last_name"
+                            ></v-list-item>
+
+                            <v-list-item
+                                title="Celular"
+                                :subtitle="itemReview.customer.phone"
+                            ></v-list-item>
+
+
                         </v-col>
                     </v-row>
                 </v-card-text>
