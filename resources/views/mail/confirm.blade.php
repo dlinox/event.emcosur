@@ -261,9 +261,7 @@
                                                             <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
                                                                 <div class="alignment" align="center" style="line-height:10px">
                                                                     <div style="max-width: 175px;">
-                                                                    <!-- <img src="{{ $dataMail['qrCode'] }}" alt="Código QR">
-                                                                    <img src="{!!  base64_encode($dataMail['qrCode']) !!}"/> -->
-
+            
                                                                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate($dataMail['qrData'])) !!} ">
 
                                                                     </div>
