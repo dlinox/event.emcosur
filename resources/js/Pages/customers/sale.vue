@@ -679,6 +679,11 @@ const onSeatSelected = (grandstand, seat) => {
             (s) => s.id !== seat.id
         );
 
+        form.value.payment_amount = seatsSelected.value.reduce(
+            (acc, ee) => acc + parseFloat(ee.seat.price),
+            0
+        );
+
         seat.status = "available";
     } else {
         if (seatsSelected.value.length === limit.value) {
