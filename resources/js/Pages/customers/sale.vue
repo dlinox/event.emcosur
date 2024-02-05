@@ -669,6 +669,10 @@ const registerSale = async () => {
 
 const removeSeat = (seat) => {
     seatsSelected.value = seatsSelected.value.filter((s) => s.id !== seat.id);
+    form.value.payment_amount = seatsSelected.value.reduce(
+            (acc, ee) => acc + parseFloat(ee.seat.price),
+            0
+        );
 };
 
 const onSeatSelected = (grandstand, seat) => {
