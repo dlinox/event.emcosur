@@ -66,44 +66,62 @@
                 </v-col>
             </v-row>
         </v-container>
-        <v-dialog v-model="reviewDialog" max-width="600" persistent scrollable>
-            <v-card>
-                <v-card-title>
-                    <span class="headline">Revisar venta</span>
-                </v-card-title>
 
-                <v-img :src="itemReview.payment_image_url"></v-img>
-
+        <v-dialog v-model="reviewDialog" max-width="800" persistent scrollable>
+            <v-card title="Revisar venta">
                 <v-card-text>
-                    <v-list-item
-                        title="Banco"
-                        :subtitle="itemReview.payment_bank"
-                    ></v-list-item>
-                    <v-list-item
-                        title="Serie / Número de transaccion"
-                        :subtitle="itemReview.payment_transaction_id"
-                    ></v-list-item>
-                    <v-list-item
-                        title="Fecha de pago"
-                        :subtitle="itemReview.payment_date"
-                    ></v-list-item>
-                    <v-list-item
-                        title="Monto"
-                        :subtitle="itemReview.payment_amount"
-                    ></v-list-item>
+                    <v-row>
+                        <v-col cols="12" md="6">
+                            <div class="img_wrap">
+                                <img
+                                    :src="itemReview.payment_image_url"
+                                    width="100%"
+                                />
+                            </div>
+                        </v-col>
+
+                        <v-col cols="12" md="6">
+                            <v-list-item
+                                title="Banco"
+                                :subtitle="itemReview.payment_bank"
+                            ></v-list-item>
+                            <v-list-item
+                                title="Serie / Número de transaccion"
+                                :subtitle="itemReview.payment_transaction_id"
+                            ></v-list-item>
+                            <v-list-item
+                                title="Fecha de pago"
+                                :subtitle="itemReview.payment_date"
+                            ></v-list-item>
+                            <v-list-item
+                                title="Monto"
+                                :subtitle="itemReview.payment_amount"
+                            ></v-list-item>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
 
-                <v-card-actions>
+                <v-card-actions class="border">
                     <v-spacer></v-spacer>
-                    <v-btn color="grey" @click="reviewDialog = false"
-                        >Cerrar</v-btn
-                    >
-                    <v-btn color="red" @click="cancel(itemReview)">
-                        Rechazar</v-btn
-                    >
-                    <v-btn text @click="confirmOnlinePayment(itemReview)"
-                        >Confirmar</v-btn
-                    >
+
+                    <v-btn color="grey" @click="reviewDialog = false">
+                        Cerrar
+                    </v-btn>
+
+                    <v-btn color="red">
+                        <DialogConfirm
+                            text="¿Seguro de rechazar el pago?"
+                            @onConfirm="cancel(itemReview)"
+                        />
+                        Rechazar
+                    </v-btn>
+                    <v-btn text>
+                        <DialogConfirm
+                            text="¿Seguro de confirmar el pago?"
+                            @onConfirm="confirmOnlinePayment(itemReview)"
+                        />
+                        Confirmar
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -112,6 +130,7 @@
 <script setup>
 import SalesLayout from "@/layouts/SalesLayout.vue";
 import { router } from "@inertiajs/vue3";
+import DialogConfirm from "@/components/DialogConfirm.vue";
 import { defineProps, ref } from "vue";
 const props = defineProps({
     salesPending: Array,
@@ -133,7 +152,7 @@ const reviewSale = (sale) => {
 // Route::put('/sales/{id}/confirm-online-payment', [SaleController::class, 'confirmOnlinePayment'])->name('confirm-online-payment');
 
 const confirmOnlinePayment = (sale) => {
-    router.put("/sa/sales/" + sale.id + "/confirm-online-payment", {
+    router.put("/sa/sales/" + sale.id + "/confirm-online-payment", null, {
         onSuccess: () => {
             reviewDialog.value = false;
         },
@@ -141,10 +160,31 @@ const confirmOnlinePayment = (sale) => {
 };
 
 const cancel = (sale) => {
-    router.put("/sa/sales/" + sale.id + "/cancel", {
+    router.put("/sa/sales/" + sale.id + "/cancel", null, {
         onSuccess: () => {
             reviewDialog.value = false;
         },
     });
 };
 </script>
+
+<style lang="scss" scoped>
+.img_wrap {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center center;
+    }
+}
+</style>
+```

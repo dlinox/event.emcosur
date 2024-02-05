@@ -29,6 +29,49 @@
             >
                 <v-container fluid>
                     <v-card>
+                        <v-toolbar
+                            title="Selecciona tus asientos"
+                            density="compact"
+                            extension
+                        >
+                            <template #extension>
+                                <v-chip class="" color="primary" label>
+                                    <v-icon
+                                        start
+                                        color="red"
+                                        icon="mdi-square-rounded"
+                                    ></v-icon>
+                                    <small>Ocupado</small>
+                                </v-chip>
+
+                                <v-chip class="ma-1" color="primary" label>
+                                    <v-icon
+                                        start
+                                        color="warning"
+                                        icon="mdi-square-rounded"
+                                    ></v-icon>
+                                    <small>Reservado</small>
+                                </v-chip>
+
+                                <v-chip class="ma-1" color="primary" label>
+                                    <v-icon
+                                        start
+                                        color="primary"
+                                        icon="mdi-square-rounded"
+                                    ></v-icon>
+                                    <small>Seleccionado</small>
+                                </v-chip>
+
+                                <v-chip class="ma-1" color="primary" label>
+                                    <v-icon
+                                        start
+                                        color="primary"
+                                        icon="mdi-square-rounded-outline"
+                                    ></v-icon>
+                                    <small>Disponible</small>
+                                </v-chip>
+                            </template>
+                        </v-toolbar>
                         <v-table>
                             <tbody>
                                 <tr
@@ -61,11 +104,12 @@
                                             :color="
                                                 statusSeat[seat.status].color
                                             "
-                                            :disabled="
+                                            @click="
                                                 seat.status === 'sold' ||
                                                 seat.status === 'reserved'
+                                                    ? null
+                                                    : onSeatSelected(tab_, seat)
                                             "
-                                            @click="onSeatSelected(tab_, seat)"
                                         >
                                             <small>{{ seat.name }}</small>
                                         </v-btn>
@@ -110,7 +154,8 @@
                                 <template #prepend>
                                     <v-avatar
                                         :color="
-                                            rowsColor[`${item_.seat.row}`] + '-1'
+                                            rowsColor[`${item_.seat.row}`] +
+                                            '-1'
                                         "
                                     >
                                         {{ item_.seat.name }}
@@ -380,7 +425,7 @@ import { ref, onMounted } from "vue";
 import { router } from "@inertiajs/vue3";
 import CustomerLayout from "@/layouts/CustomerLayout.vue";
 import CropCompressImage from "@/components/CropCompressImage.vue";
-import Header from "./components/Header.vue";
+import Header from "@/Pages/customers/components/Header.vue";
 const props = defineProps({
     item: Object,
     grandstandId: [String, Number],
@@ -400,7 +445,7 @@ const saleConfirmModal = ref(false);
 const rows = ref([]);
 const tab = ref(0);
 const tabPayment = ref("card");
-const bankItems = ["Interbank", "Scotiabank", "BBVA", "BCP", "OTRO"];
+const bankItems = ["Interbank", "BBVA", "BCP"];
 
 const type_documets = [
     { title: "DNI", value: "DNI" },
@@ -570,12 +615,11 @@ init();
     background-image: url("https://static.vecteezy.com/system/resources/thumbnails/018/878/331/small/empty-straight-road-with-marking-horizontal-highway-overhead-view-seamless-roadway-template-carriageway-element-of-city-map-vector.jpg");
     background-repeat: repeat-x;
     background-position: center center;
-    padding: 1rem ;
-    span{
-        background-color: rgba(0,0,0,.5);
+    padding: 1rem;
+    span {
+        background-color: rgba(0, 0, 0, 0.5);
         padding: 0.5rem;
         border-radius: 0.5rem;
     }
- 
 }
 </style>

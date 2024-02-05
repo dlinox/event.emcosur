@@ -18,6 +18,39 @@
                 </v-tabs>
             </template>
         </v-toolbar>
+        <div>
+            <v-chip class="" color="primary" label>
+                <v-icon start color="red" icon="mdi-square-rounded"></v-icon>
+                <small>Ocupado</small>
+            </v-chip>
+
+            <v-chip class="ma-1" color="primary" label>
+                <v-icon
+                    start
+                    color="warning"
+                    icon="mdi-square-rounded"
+                ></v-icon>
+                <small>Reservado</small>
+            </v-chip>
+
+            <v-chip class="ma-1" color="primary" label>
+                <v-icon
+                    start
+                    color="primary"
+                    icon="mdi-square-rounded"
+                ></v-icon>
+                <small>Seleccionado</small>
+            </v-chip>
+
+            <v-chip class="ma-1" color="primary" label>
+                <v-icon
+                    start
+                    color="primary"
+                    icon="mdi-square-rounded-outline"
+                ></v-icon>
+                <small>Disponible</small>
+            </v-chip>
+        </div>
 
         <v-window v-model="tab" direction="vertical">
             <v-window-item
@@ -70,8 +103,12 @@
                                                     ? 'primary'
                                                     : 'black'
                                             "
-                                            :disabled="seat.status === 'sold'"
-                                            @click="onSeatSelected(tab_, seat)"
+                                            @click="
+                                                seat.status === 'sold' ||
+                                                seat.status === 'reserved'
+                                                    ? null
+                                                    : onSeatSelected(tab_, seat)
+                                            "
                                         >
                                             <small>{{ seat.name }}</small>
                                         </v-btn>
@@ -125,7 +162,6 @@
                             </v-list-item>
                         </v-card-text>
                     </v-card>
-                    
                 </v-col>
                 <v-col cols="12" md="4">
                     <v-card variant="tonal">
@@ -464,6 +500,8 @@ const mapRows = (tab_) => {
         }
         return acc;
     }, []);
+
+    rows.value.reverse();
 };
 
 const init = () => {

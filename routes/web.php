@@ -13,6 +13,21 @@ use App\Http\Controllers\Support\SupportController;
 use Illuminate\Support\Facades\Route;
 
 
+//mail test
+
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/mail', function () {
+    Mail::to('dpumaticona@gmail.com')->send(new TestMail());
+    return 'Email was sent';
+});
+
+//view test mail
+Route::get('/test-mail', function () {
+    return view('mail.test');
+});
+
 
 Route::get('/', [CustomersController::class, 'index']);
 Route::get('/sale/{id}', [CustomersController::class, 'sale']);
