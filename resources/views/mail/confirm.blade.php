@@ -251,6 +251,7 @@
                                                                     </div>
                                                                     @endforeach
 
+                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(256)->generate('https://google.com')) !!} ">
                                                                 </div>
                                                             </td>
                                                         </tr>
