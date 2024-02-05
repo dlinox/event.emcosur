@@ -13,7 +13,7 @@ class CustomersController extends Controller
     public function index()
     {
 
-        $vents = Event::with('grandstands')->get();
+        $vents = Event::where('is_active', 1)->with('grandstands')->get();
         return Inertia::render('customers/index', [
             'events' => $vents,
         ]);
@@ -25,9 +25,9 @@ class CustomersController extends Controller
 
         $event = Event::with(['grandstands' => function ($queryGrandstand) use ($id) {
             $queryGrandstand->where('id', $id);
-        
+
             $queryGrandstand->with(['seats' => function ($querySeat) {
-  
+
                 $querySeat->where('is_active', true);
             }]);
         }])->where('id', $grandstands->event_id)->first();
