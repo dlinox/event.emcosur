@@ -255,6 +255,7 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+
                                                     <table class="image_block block-3" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                                                         <tr>
                                                             <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
@@ -262,7 +263,8 @@
                                                                     <div style="max-width: 175px;">
                                                                     <!-- <img src="{{ $dataMail['qrCode'] }}" alt="Código QR">
                                                                     <img src="{!!  base64_encode($dataMail['qrCode']) !!}"/> -->
-                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(256)->generate('https://google.com')) !!} ">
+
+                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate($dataMail['qrData'])) !!} ">
 
                                                                     </div>
                                                                 </div>

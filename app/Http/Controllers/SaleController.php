@@ -93,15 +93,9 @@ class SaleController extends Controller
                 'grandstands' => $grandstands,
             ];
 
-            //encriptar el id de la venta
-            $saleHash = encrypt($sale->id);
+            $qrData = encrypt($sale->id);
 
-            //crear qr de la venta
-            $qrCode = QrCode::size(200)->generate($saleHash);
-            // $base64Image = 'data:image/png;base64,' . base64_encode($qrCode);
-            //qr envial al correo
-            $dataMail['qrCode'] = $qrCode;
-
+            $dataMail['qrData'] = $qrData;
             //email email de confirmacion, se envia al cliente, 
             $mail = new ConfirmMail($dataMail);
             Mail::to($customer->email)->send($mail);
