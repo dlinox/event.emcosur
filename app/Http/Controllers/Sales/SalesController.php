@@ -17,7 +17,7 @@ class SalesController extends Controller
         //with customers
         $salesPending = Sale::where('status', 'pending')->with('customer')->get();
 
-        $events = Event::all();
+        $events = Event::where('is_active', true)->get();
 
         return Inertia::render('sales/index', [
             'salesPending' => $salesPending,
