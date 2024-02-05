@@ -28,7 +28,7 @@ class SalesController extends Controller
     public function events()
     {
 
-        $events = Event::all();
+        $events = Event::where('is_active', true)->get();
 
         return Inertia::render('sales/events/index', ['items' => $events,]);
     }
