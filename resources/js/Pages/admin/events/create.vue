@@ -92,7 +92,13 @@
                                 <v-toolbar
                                     density="compact"
                                     :title="'Tribuna N°' + (index + 1)"
-                                />
+                                >
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn icon @click="duplicate(index)">
+                                        <v-icon>mdi-content-copy</v-icon>
+                                    </v-btn>
+                                </v-toolbar>
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12">
@@ -223,8 +229,8 @@ const form = ref({
     date: "",
     grandstands: [
         {
-            name: "",
-            capacity: "",
+            name: "TRIBUNA ",
+            capacity: "2",
             rows: {
                 capacity: 5,
                 seats: [
@@ -268,6 +274,10 @@ const createSeats = (value, indexGrandstand) => {
             price: 0,
         });
     }
+};
+
+const duplicate = (index) => {
+    form.value.grandstands.push(form.value.grandstands[index]);
 };
 
 const addGrandstand = () => {
