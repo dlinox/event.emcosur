@@ -263,6 +263,7 @@
                                                                     <div style="max-width: 175px;">
             
                                                                     <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate($dataMail['qrData'])) !!} ">
+                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('jjjjjj')) !!} ">
 
                                                                     </div>
                                                                 </div>
