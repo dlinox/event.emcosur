@@ -277,7 +277,7 @@ const createSeats = (value, indexGrandstand) => {
 };
 
 const duplicate = (index) => {
-    form.value.grandstands.push(form.value.grandstands[index]);
+    form.value.grandstands.push({ ...form.value.grandstands[index] });
 };
 
 const addGrandstand = () => {
