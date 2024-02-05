@@ -8,6 +8,7 @@ import vuetify from "@/plugins/vuetify";
 
 import "vue-advanced-cropper/dist/style.css";
 
+
 createInertiaApp({
     resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });

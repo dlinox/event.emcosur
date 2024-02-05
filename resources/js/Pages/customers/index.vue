@@ -21,7 +21,13 @@
                         v-for="bank in bankAccounts"
                         :key="bank.name"
                     >
-                        <v-card color="transparent" elevation="0" density="compact" class="border-e" rounded="0">
+                        <v-card
+                            color="transparent"
+                            elevation="0"
+                            density="compact"
+                            class="border-e"
+                            rounded="0"
+                        >
                             <div
                                 class="d-flex flex-no-wrap justify-space-between"
                             >
@@ -31,7 +37,6 @@
                                     </v-card-subtitle>
                                     <v-card-title class="">
                                         <small>
-
                                             {{ bank.account }}
                                         </small>
                                     </v-card-title>
@@ -45,7 +50,7 @@
                 </v-row>
             </v-card>
 
-            <v-container  class="my-5">
+            <v-container class="my-5">
                 <v-row>
                     <v-col md="8">
                         <v-card
@@ -130,6 +135,42 @@
                     </v-card>
                 </v-col>
             </v-row>
+            <!-- <QRCodeVue3
+                :width="200"
+                :height="200"
+                value="https://scholtz.sk"
+                :qrOptions="{
+                    typeNumber: 0,
+                    mode: 'Byte',
+                    errorCorrectionLevel: 'H',
+                }"
+                :imageOptions="{
+                    hideBackgroundDots: true,
+                    imageSize: 0.4,
+                    margin: 0,
+                }"
+                :dotsOptions="{
+                    type: 'square',
+                    color: '#26249a',
+                    gradient: {
+                        type: 'linear',
+                        rotation: 0,
+                        colorStops: [
+                            { offset: 0, color: '#000000' },
+                            { offset: 1, color: '#000000' },
+                        ],
+                    },
+                }"
+                :backgroundOptions="{ color: '#ffffff' }"
+                :cornersSquareOptions="{ type: 'dot', color: '#000000' }"
+                :cornersDotOptions="{ type: undefined, color: '#000000' }"
+                fileExt="png"
+                :download="true"
+                myclass="my-qur"
+                imgclass="img-qr"
+                downloadButton="my-button"
+                :downloadOptions="{ name: 'vqr', extension: 'png' }"
+            /> -->
         </v-main>
 
         <v-dialog width="700" v-model="dialog">
@@ -178,7 +219,7 @@ import { router } from "@inertiajs/vue3";
 import Header from "./components/Header.vue";
 import HeroSlider from "./components/HeroSlider.vue";
 import FlayerSlider from "@/Pages/customers/components/FlayerSlider.vue";
-
+import QRCodeVue3 from "qrcode-vue3";
 const props = defineProps({
     events: Array,
 });
@@ -207,7 +248,6 @@ const bankAccounts = [
         account: "986868650",
         img: "/images/banks/yape.jpg",
     },
-    
 ];
 
 const selectGrandstand = (event) => {
