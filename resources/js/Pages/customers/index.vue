@@ -96,81 +96,49 @@
                     </v-col>
                 </v-row>
             </v-container>
-            <v-row no-gutters>
-                <v-col md="6">
-                    <v-card
-                        variant="tonal"
-                        theme="dark"
-                        rounded="0"
-                        title="¿Como comprar 100%?"
-                    >
-                        <iframe
-                            width="100%"
-                            height="400"
-                            src="https://www.youtube.com/embed/Z7SkA8NALrE?si=gT1YPZhSA1RDEj10"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                        ></iframe>
-                    </v-card>
-                </v-col>
+                <!-- <v-row no-gutters>
+                    <v-col md="6">
+                        <v-card
+                            variant="tonal"
+                            theme="dark"
+                            rounded="0"
+                            title="¿Como comprar 100%?"
+                        >
+                            <iframe
+                                width="100%"
+                                height="400"
+                                src="https://www.youtube.com/embed/Z7SkA8NALrE?si=gT1YPZhSA1RDEj10"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+                        </v-card>
+                    </v-col>
 
-                <v-col md="6">
-                    <v-card
-                        variant="tonal"
-                        theme="dark"
-                        rounded="0"
-                        title="¿Como comprar 100%?"
-                    >
-                        <iframe
-                            width="100%"
-                            height="400"
-                            src="https://www.youtube.com/embed/1ow3EC56PAM?si=wecZ1yPpJVK8D2NP"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                        ></iframe>
-                    </v-card>
-                </v-col>
-            </v-row>
-            <!-- <QRCodeVue3
-                :width="200"
-                :height="200"
-                value="https://scholtz.sk"
-                :qrOptions="{
-                    typeNumber: 0,
-                    mode: 'Byte',
-                    errorCorrectionLevel: 'H',
-                }"
-                :imageOptions="{
-                    hideBackgroundDots: true,
-                    imageSize: 0.4,
-                    margin: 0,
-                }"
-                :dotsOptions="{
-                    type: 'square',
-                    color: '#26249a',
-                    gradient: {
-                        type: 'linear',
-                        rotation: 0,
-                        colorStops: [
-                            { offset: 0, color: '#000000' },
-                            { offset: 1, color: '#000000' },
-                        ],
-                    },
-                }"
-                :backgroundOptions="{ color: '#ffffff' }"
-                :cornersSquareOptions="{ type: 'dot', color: '#000000' }"
-                :cornersDotOptions="{ type: undefined, color: '#000000' }"
-                fileExt="png"
-                :download="true"
-                myclass="my-qur"
-                imgclass="img-qr"
-                downloadButton="my-button"
-                :downloadOptions="{ name: 'vqr', extension: 'png' }"
-            /> -->
+                    <v-col md="6">
+                        <v-card
+                            variant="tonal"
+                            theme="dark"
+                            rounded="0"
+                            title="¿Como comprar 100%?"
+                        >
+                            <iframe
+                                width="100%"
+                                height="400"
+                                src="https://www.youtube.com/embed/1ow3EC56PAM?si=wecZ1yPpJVK8D2NP"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                            ></iframe>
+                        </v-card>
+                    </v-col>
+                </v-row> -->
+
+
+            <Footer />
+        
         </v-main>
 
         <v-dialog width="700" v-model="dialog">
@@ -219,7 +187,8 @@ import { router } from "@inertiajs/vue3";
 import Header from "./components/Header.vue";
 import HeroSlider from "./components/HeroSlider.vue";
 import FlayerSlider from "@/Pages/customers/components/FlayerSlider.vue";
-import QRCodeVue3 from "qrcode-vue3";
+import Footer from "@/Pages/customers/components/Footer.vue";
+
 const props = defineProps({
     events: Array,
 });

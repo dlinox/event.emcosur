@@ -45,4 +45,14 @@ class CustomersController extends Controller
     {
         return Inertia::render('customers/payment');
     }
+
+    public function ticket(Request $request)
+    {
+
+        $hash = $request->hash;
+
+        return Inertia::render('customers/ticket', [
+            'hash' => $hash,
+        ]);
+    }
 }

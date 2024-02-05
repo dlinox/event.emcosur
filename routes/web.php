@@ -27,11 +27,14 @@ Route::get('/mail', function () {
 Route::get('/test-mail', function () {
     return view('mail.test');
 });
+//ticket
+
 
 
 Route::get('/', [CustomersController::class, 'index']);
 Route::get('/sale/{id}', [CustomersController::class, 'sale']);
 Route::get('/payment', [CustomersController::class, 'payment']);
+Route::get('/ticket', [CustomersController::class, 'ticket'])->name('ticket');
 Route::post('/sales', [SaleController::class, 'storeOnline'])->name('store.online');
 
 

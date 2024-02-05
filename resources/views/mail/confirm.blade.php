@@ -251,7 +251,6 @@
                                                                     </div>
                                                                     @endforeach
 
-                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(256)->generate('https://google.com')) !!} ">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -261,11 +260,10 @@
                                                         <tr>
                                                             <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
                                                                 <div class="alignment" align="center" style="line-height:10px">
-                                                                    <div style="max-width: 175px;">
-            
-                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate($dataMail['qrData'])) !!} ">
-                                                                    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('jjjjjj')) !!} ">
-
+                                                                    <div>
+                                                                        <a href="{{ route('ticket', ['hash' => $dataMail['hash']]) }}" target="_blank" style="outline:none; padding:10px 20px; background-color: #114d76; color: white; " tabindex="-1">
+                                                                            Ver entrada
+                                                                        </a>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -370,7 +368,7 @@
                             </tr>
                         </tbody>
                     </table>
-            
+
                 </td>
             </tr>
         </tbody>

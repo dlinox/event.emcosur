@@ -78,6 +78,8 @@ class SaleController extends Controller
                 $seat->save();
             }
 
+
+
             $event = Event::select()->where('id', $request->event)->first();
             $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
                 ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
@@ -86,17 +88,13 @@ class SaleController extends Controller
                 ->groupBy('grandstands.id')
                 ->get();
 
-
             $dataMail = [
                 'event' => $event,
                 'customer' => $customer,
                 'grandstands' => $grandstands,
+                'hash' => encrypt($sale->id),
             ];
 
-            $qrData = encrypt($sale->id);
-
-            $dataMail['qrData'] = $qrData;
-            //email email de confirmacion, se envia al cliente, 
             $mail = new ConfirmMail($dataMail);
             Mail::to($customer->email)->send($mail);
 
@@ -144,6 +142,9 @@ class SaleController extends Controller
 
             $sale = Sale::create($dataSale);
 
+
+            $grandstandsIDs = [];
+
             foreach ($request->seats as $seat) {
 
                 SaleDetail::create([
@@ -151,6 +152,10 @@ class SaleController extends Controller
                     'sale_id' => $sale->id,
                 ]);
                 $seat = Seat::find($seat);
+
+                if (!in_array($seat->grandstand_id, $grandstandsIDs)) {
+                    $grandstandsIDs[] = $seat->grandstand_id;
+                }
                 //validar que no este vendido o reservado
                 if ($seat->status != 'available') {
                     throw new \Exception('El asiento ' . $seat->name . ' ya fue vendido o reservado');
@@ -160,6 +165,24 @@ class SaleController extends Controller
                 $seat->save();
             }
 
+            $event = Event::select()->where('id', $request->event)->first();
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+                ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
+                ->whereIn('grandstands.id', $grandstandsIDs)
+                ->whereIn('seats.id', $request->seats)
+                ->groupBy('grandstands.id')
+                ->get();
+
+            $dataMail = [
+                'event' => $event,
+                'customer' => $customer,
+                'grandstands' => $grandstands,
+                'hash' => encrypt($sale->id),
+            ];
+
+            $mail = new ConfirmMail($dataMail);
+            //con copia 
+            Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
 
             DB::commit();
             return redirect()->back()->with('success', 'Su compra se realizo con exito');
