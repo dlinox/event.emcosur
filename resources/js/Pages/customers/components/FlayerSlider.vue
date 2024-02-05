@@ -27,8 +27,8 @@ const modules = [Autoplay];
 const images = [
     "/images/flayers/f2.png",
     "/images/flayers/f1.png",
-    "/images/flayers/f4.png",
-    "/images/flayers/f5.png",
     "/images/flayers/f6.png",
+    "/images/flayers/f5.png",
+    "/images/flayers/f4.png",
 ];
 </script>
