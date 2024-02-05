@@ -658,8 +658,6 @@ const mapRows = (tab_) => {
 
     tempRows.value = [...rows.value];
 
-    console.log("des", rows.value.reverse());
-    console.log("reverse", tempRows.value.reverse());
 };
 
 const init = () => {

@@ -223,7 +223,6 @@ const selectGrandstand = (event) => {
     dialog.value = true;
     eventSelected.value = event;
 
-    console.log(event);
 };
 //v-carousel auto play
 </script>
