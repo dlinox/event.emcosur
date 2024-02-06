@@ -96,35 +96,25 @@
                     </v-col>
                 </v-row>
             </v-container>
-       
+
             <Footer />
-        
         </v-main>
 
         <v-dialog width="700" v-model="dialog">
             <v-card title="Seleccione una tribuna ">
                 <img src="/images/tribunas.png" width="100%" />
-                <v-card-text>
-                    <v-list-item
-                        v-for="grandstand in eventSelected.grandstands"
-                        :key="grandstand.id"
-                        :title="grandstand.name"
-                    >
-                        <template v-slot:prepend>
-                            <v-avatar color="grey-lighten-1">
-                                <v-icon color="white">mdi-seat</v-icon>
-                            </v-avatar>
-                        </template>
 
-                        <template v-slot:append>
-                            <v-btn
-                                @click="router.get('/sale/' + grandstand.id)"
-                            >
-                                Seleccionar
-                            </v-btn>
-                        </template>
-                    </v-list-item>
-                </v-card-text>
+                <v-list-item
+                class="mt-3"
+                    v-for="grandstand in eventSelected.grandstands"
+                    :key="grandstand.id"
+                    :title="grandstand.name"
+                >
+                    <template v-slot:append>
+                        <v-btn @click="router.get('/sale/' + grandstand.id)" variant="tonal" icon="mdi-arrow-right" density="comfortable">                            
+                        </v-btn>
+                    </template>
+                </v-list-item>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -182,7 +172,6 @@ const bankAccounts = [
 const selectGrandstand = (event) => {
     dialog.value = true;
     eventSelected.value = event;
-
 };
 //v-carousel auto play
 </script>

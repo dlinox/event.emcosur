@@ -77,7 +77,7 @@
                                         color="red"
                                         icon="mdi-square-rounded"
                                     ></v-icon>
-                                    <small>Ocupado</small>
+                                    <small>No disponible</small>
                                 </v-chip>
 
                                 <v-chip class="ms-1" color="primary" label>
@@ -590,7 +590,7 @@ const saleConfirmModal = ref(false);
 const rows = ref([]);
 const tab = ref(0);
 const tabPayment = ref("card");
-const bankItems = ["Interbank", "BBVA", "BCP"];
+const bankItems = ["Interbank", "BBVA", "BCP", "YAPE"];
 
 const type_documets = [
     { title: "DNI", value: "DNI" },
