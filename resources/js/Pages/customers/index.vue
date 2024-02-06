@@ -105,13 +105,19 @@
                 <img src="/images/tribunas.png" width="100%" />
 
                 <v-list-item
-                class="mt-3"
+                    class="mt-3"
                     v-for="grandstand in eventSelected.grandstands"
                     :key="grandstand.id"
                     :title="grandstand.name"
+                    @click="router.get('/sale/' + grandstand.id)"
                 >
                     <template v-slot:append>
-                        <v-btn @click="router.get('/sale/' + grandstand.id)" variant="tonal" icon="mdi-arrow-right" density="comfortable">                            
+                        <v-btn
+                            @click="router.get('/sale/' + grandstand.id)"
+                            variant="tonal"
+                            icon="mdi-arrow-right"
+                            density="comfortable"
+                        >
                         </v-btn>
                     </template>
                 </v-list-item>
