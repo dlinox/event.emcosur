@@ -26,17 +26,17 @@
                         </template>
 
                         <template v-slot:item.status="{ item }">
-                            {{
-                                item.status === "pending"
-                                    ? "Pendiente"
-                                    : item.status === "completed"
-                                    ? "Aprobado"
-                                    : item.status === "canceled"
-                                    ? "Rechazado"
-                                    : item.status === "canceled"
-                                    ? "Cancelado"
-                                    : "-"
-                            }}
+                            <v-chip
+                                :color="status[item.status].color"
+                                text-color="white"
+
+                            >
+
+                                {{
+                                    status[item.status].label
+                                }}
+                            </v-chip>
+                        
                         </template>
 
                         <template v-slot:item.customer="{ item }">
@@ -177,6 +177,7 @@
                                 color="blue"
                             >
                                 <DialogConfirm
+                                text="¿Está seguro de enviar el correo?"
                                     @onConfirm="
                                         () =>
                                             router.post(
@@ -216,6 +217,22 @@ const props = defineProps({
 });
 ///sales/{id}/send-email
 // const dialogDetail = ref(false);
+
+const status = {
+    pending:{
+        label: "Pendiente",
+        color: "warning"
+    },
+    completed:{
+        label: "Aprobado",
+        color: "success"
+    },
+    canceled:{
+        label: "Rechazado",
+        color: "error"
+    }
+
+}
 
 const primaryKey = "id";
 const url = "/a";
