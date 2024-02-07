@@ -173,7 +173,7 @@
                                         () =>
                                             router.delete(
                                                 url +
-                                                    '/' +
+                                                    '/sales/' +
                                                     item[`${primaryKey}`]
                                             )
                                     "
@@ -210,5 +210,5 @@ const props = defineProps({
 // const dialogDetail = ref(false);
 
 const primaryKey = "id";
-const url = "/a/sales";
+const url = "/a";
 </script>

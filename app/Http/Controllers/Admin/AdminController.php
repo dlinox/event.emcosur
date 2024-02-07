@@ -24,6 +24,13 @@ class AdminController extends Controller
 
         if ($request->has('search')) {
             $searchTerm = $request->search;
+
+            //buscar por usuario y cliente
+            $query->whereHas('user', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%');
+            })->orWhereHas('customer', function ($query) use ($searchTerm) {
+                $query->where('name', 'like', '%' . $searchTerm . '%');
+            });
             // $query->where('title', 'like', '%' . $searchTerm . '%');
         }
         $query->with('event', 'customer', 'user', 'saleDetails');
