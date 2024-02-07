@@ -1,7 +1,7 @@
 <template>
     <AuthLayout title="Login">
         <div class="w-100 h-screen d-flex justify-center align-center">
-            <v-card width="400" title="Entrada virtual" class="mx-auto">
+            <v-card width="400" title="Entrada virtual" class="mx-auto" subtitle="Solo muestre este codigo al momento de su ingreso">
                 <v-card-text class="d-flex justify-center">
                     <QRCodeVue3
                         :width="320"
