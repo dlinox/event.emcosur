@@ -2,7 +2,9 @@
     <footer class="footer">
       <div class="container">
         <div class="_logo">
-          <img src="/logo.png" alt="logo" width="100" />
+          <img class="logo" src="/logo.png" alt="logo emcosur" width="120" />
+          <p>CON EL RESPALDO DE: </p>
+          <img class="logo_layher" src="/logo_layher.png" alt="Logo de Layher" width="300">
         </div>
         <div class="_enterprise">
           <h3>EMCOSUR K&F</h3>
@@ -46,8 +48,20 @@ $third: #faab33;
       align-items: center;
       gap: 2rem;
       ._logo {
-        img {
-          width: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center ;
+        flex-direction: column;
+        p{
+          font-size: 0.8rem;
+          color: white;
+          margin: 10px 0;
+        }
+        img.logo {
+          width: 150px;
+        }
+        img.logo_layher {
+          width: 180px;
         }
       }
       ._enterprise {
