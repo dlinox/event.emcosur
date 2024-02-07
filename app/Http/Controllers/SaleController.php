@@ -79,7 +79,7 @@ class SaleController extends Controller
                 'payment_type' => 'cash',
                 'payment_method' => 'cash',
                 'payment_date' => now(),
-                'payment_amount' => $request->total,
+                'payment_amount' => $request->payment_amount,
                 'event_id' => $request->event,
                 'customer_id' => $customer->id,
                 'user_id' => Auth::user()->id,
@@ -126,7 +126,7 @@ class SaleController extends Controller
             ];
 
             $mail = new ConfirmMail($dataMail);
-            Mail::to($customer->email)->send($mail);
+            Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
 
             DB::commit();
             return redirect()->back()->with('success', 'Venta realizada con exito');
@@ -334,6 +334,38 @@ class SaleController extends Controller
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'Se ha producido un error inesperado.', 'details' => $th->getMessage()]);
         }
+    }
 
+    public function sendEmail($id)
+    {
+        try {
+            $sale = Sale::find($id);
+
+            $saleDetail = SaleDetail::where('sale_id', $sale->id)->first();
+
+            $customer = Customer::find($sale->customer_id);
+
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+                ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
+                ->where('seats.id', $saleDetail->seat_id)
+                ->groupBy('grandstands.id')
+                ->get();
+
+            $event = Event::select()->where('id', $sale->event_id)->first();
+
+            $dataMail = [
+                'event' => $event,
+                'customer' => $customer,
+                'grandstands' => $grandstands,
+                'hash' => encrypt($sale->id),
+            ];
+
+            $mail = new ConfirmMail($dataMail);
+            Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
+            return redirect()->back()->with('success', 'Correo enviado con exito');
+        } catch (\Throwable $th) {
+
+            return redirect()->back()->withErrors(['error' => 'Se ha producido un error inesperado.', 'details' => $th->getMessage()]);
+        }
     }
 }

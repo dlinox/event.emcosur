@@ -53,7 +53,9 @@ Route::middleware(['auth', 'admin'])->name('a.')->prefix('a')->group(function ()
     //delete "/a/sales";
     Route::delete('/sales/{id}', [SaleController::class, 'destroy'])->name('sales.destroy');
     
-
+    //sendEmail
+    Route::post('/sales/{id}/send-email', [SaleController::class, 'sendEmail'])->name('sales.send-email');
+    
 
     // Route::resource('users', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('events', EventController::class)->only(['index', 'create', 'store', 'update', 'destroy']);

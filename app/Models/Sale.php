@@ -88,6 +88,7 @@ class Sale extends Model
         ['text' => "Evento", 'value' => "event", 'short' => false, 'order' => 'ASC'],
         ['text' => "Cliente", 'value' => "customer", 'short' => false, 'order' => 'ASC'],
         ['text' => "Usuario", 'value' => "user", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Correo", 'value' => "email", 'short' => true, 'order' => 'ASC'],
     ];
 
 

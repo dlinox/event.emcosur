@@ -144,7 +144,8 @@
                                 <template #prepend>
                                     <v-avatar
                                         :color="
-                                            rowsColor[`${item_.seat.row}`]  + '-1'
+                                            rowsColor[`${item_.seat.row}`] +
+                                            '-1'
                                         "
                                     >
                                         {{ item_.seat.name }}
@@ -329,6 +330,7 @@ const type_documets = [
 ];
 
 const form = ref({
+    payment_amount: 0,
     customer: {
         name: null,
         last_name: null,
@@ -389,6 +391,12 @@ const registerSale = async () => {
     if (!valid) return;
 
     form.value.seats = seatsSelected.value.map((s) => s.id);
+
+    form.value.payment_amount = seatsSelected.value.reduce(
+        (acc, ee) => acc + parseFloat(ee.seat.price),
+        0
+    );
+
     saleConfirmModal.value = true;
 };
 

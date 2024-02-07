@@ -355,6 +355,7 @@
                                                     "
                                                     label="Monto"
                                                     :rules="rulesAmount"
+                                                    disabled
                                                 />
                                             </v-col>
                                             <v-col cols="12" md="8">

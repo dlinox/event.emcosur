@@ -25,8 +25,26 @@
                             {{ item.event.name }}
                         </template>
 
+                        <template v-slot:item.status="{ item }">
+                            {{
+                                item.status === "pending"
+                                    ? "Pendiente"
+                                    : item.status === "completed"
+                                    ? "Aprobado"
+                                    : item.status === "canceled"
+                                    ? "Rechazado"
+                                    : item.status === "canceled"
+                                    ? "Cancelado"
+                                    : "-"
+                            }}
+                        </template>
+
                         <template v-slot:item.customer="{ item }">
                             {{ item.customer.name }}
+                        </template>
+
+                        <template v-slot:item.email="{ item }">
+                            {{ item.customer.email }}
                         </template>
 
                         <template v-slot:item.user="{ item }">
@@ -112,7 +130,6 @@
                                                         v-for="detail in item.sale_details"
                                                         :key="detail.id"
                                                         color="primary"
-
                                                         class="ma-1"
                                                     >
                                                         {{
@@ -125,38 +142,6 @@
                                                 </v-col>
                                             </v-row>
                                         </v-card-text>
-
-                                        <!-- <v-card-actions class="border">
-                                            <v-spacer></v-spacer>
-
-                                            <v-btn
-                                                color="grey"
-                                                @click="reviewDialog = false"
-                                            >
-                                                Cerrar
-                                            </v-btn>
-
-                                            <v-btn color="red">
-                                                <DialogConfirm
-                                                    text="¿Seguro de rechazar el pago?"
-                                                    @onConfirm="
-                                                        cancel(itemReview)
-                                                    "
-                                                />
-                                                Rechazar
-                                            </v-btn>
-                                            <v-btn text>
-                                                <DialogConfirm
-                                                    text="¿Seguro de confirmar el pago?"
-                                                    @onConfirm="
-                                                        confirmOnlinePayment(
-                                                            itemReview
-                                                        )
-                                                    "
-                                                />
-                                                Confirmar
-                                            </v-btn>
-                                        </v-card-actions> -->
                                     </v-card>
                                 </template>
                             </v-dialog>
@@ -183,12 +168,35 @@
                                     icon="mdi-delete-empty"
                                 ></v-icon>
                             </v-btn>
+
+                            <v-btn
+                                icon
+                                variant="outlined"
+                                density="comfortable"
+                                class="ml-1"
+                                color="blue"
+                            >
+                                <DialogConfirm
+                                    @onConfirm="
+                                        () =>
+                                            router.post(
+                                                url +
+                                                    '/sales/' +
+                                                    item[`${primaryKey}`] +
+                                                    '/send-email'
+                                            )
+                                    "
+                                />
+                                <v-icon
+                                    size="x-small"
+                                    icon="mdi-email-arrow-right-outline"
+                                ></v-icon>
+                            </v-btn>
                         </template>
                     </DataTable>
                 </v-card-item>
             </v-card>
         </v-container>
-
     </AdminLayout>
 </template>
 <script setup>
@@ -206,7 +214,7 @@ const props = defineProps({
     headers: Array,
     filters: Object,
 });
-
+///sales/{id}/send-email
 // const dialogDetail = ref(false);
 
 const primaryKey = "id";
