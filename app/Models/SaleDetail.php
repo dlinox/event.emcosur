@@ -27,6 +27,20 @@ class SaleDetail extends Model
         'sale_id' => 'integer',
     ];
 
+    protected $appends = [
+        'seat_name',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function getSeatNameAttribute()
+    {
+        return $this->seat->name;
+    }
+
     public function seat()
     {
         return $this->belongsTo(Seat::class);

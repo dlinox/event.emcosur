@@ -123,6 +123,6 @@ watch(
     }
 }
 .th-action {
-    width: 150px;
+    width: 180px;
 }
 </style>

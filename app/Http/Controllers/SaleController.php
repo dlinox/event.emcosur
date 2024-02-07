@@ -13,17 +13,47 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SaleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+
+    protected $sale;
+    public function __construct()
     {
-        //
+        $this->sale = new Sale();
     }
+
+    public function index(Request $request)
+    {
+
+        $perPage = $request->input('perPage', 10);
+        $query = Sale::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            // $query->where('title', 'like', '%' . $searchTerm . '%');
+        }
+        $query->with('event', 'customer');
+        // if (auth()->user()->role !== 'Administrador') {
+        //     $query->where('author_id', auth()->user()->id);
+        // }
+        // Obtener resultados paginados
+        $items = $query->paginate($perPage)->appends($request->query());
+
+        return Inertia::render('admin/index', [
+            'title' => 'Eventos  y campañas',
+            'subtitle' => 'Gestiona los eventos y campañas de la página',
+            'items' => $items,
+            'headers' => $this->sale->headers,
+            'filters' => [
+                'search' => $request->search,
+            ],
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -275,8 +305,35 @@ class SaleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sale $sale)
+    public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+
+            //consideras los foreign key
+            $sale = Sale::find($id);
+
+            //eliminar los detalles de la venta
+            $saleDetails = SaleDetail::where('sale_id', $sale->id)->get();
+
+            foreach ($saleDetails as $saleDetail) {
+                //cambiar el estado del asiento
+                $seat = Seat::find($saleDetail->seat_id);
+                $seat->status = 'available';
+                $seat->save();
+                //eliminar el detalle
+                $saleDetail->delete();
+            }
+
+
+            $sale->delete();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Venta eliminada con exito');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Se ha producido un error inesperado.', 'details' => $th->getMessage()]);
+        }
+
     }
 }

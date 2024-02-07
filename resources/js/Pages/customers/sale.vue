@@ -369,7 +369,7 @@
                                             <v-col cols="12" md="12">
                                                 <v-card variant="tonal">
                                                     <CropCompressImage
-                                                        :aspect-ratio="21 / 9"
+                                                        :aspect-ratio="1 / 1"
                                                         @onCropper="
                                                             (previewImg =
                                                                 $event.blob),
@@ -738,6 +738,8 @@ const submit = async () => {
                 event: props.item.id,
                 seats: [],
             };
+
+            previewImg.value = null;
 
             mapRows(tab.value);
             seatsSelected.value = [];

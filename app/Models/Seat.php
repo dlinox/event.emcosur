@@ -25,11 +25,21 @@ class Seat extends Model
         'grandstand_id' => 'integer',
     ];
 
+    protected $appends = [
+        'grandstand_name',
+    ];
+
+
     protected $hidden = [
         'created_at',
         'updated_at',
         'is_active',
     ];
+
+    public function getGrandstandNameAttribute()
+    {
+        return $this->grandstand->name;
+    }
 
     public function grandstand()
     {

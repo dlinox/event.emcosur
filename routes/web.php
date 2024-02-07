@@ -49,6 +49,12 @@ Route::name('auth.')->prefix('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->name('a.')->prefix('a')->group(function () {
     Route::get('',  [AdminController::class, 'index'])->name('index');
 
+
+    //delete "/a/sales";
+    Route::delete('/sales/{id}', [SaleController::class, 'destroy'])->name('sales.destroy');
+    
+
+
     // Route::resource('users', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('events', EventController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 });

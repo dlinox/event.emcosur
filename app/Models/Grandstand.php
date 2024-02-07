@@ -27,10 +27,22 @@ class Grandstand extends Model
         'event_id' => 'integer',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'is_active',
+        'location_reference',
+        'description',
+        'capacity',
+        'structure'
+    ];
+
     public function event()
     {
         return $this->belongsTo(Event::class);
     }
+
+
 
     //seats
 
