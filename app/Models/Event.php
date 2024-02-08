@@ -10,17 +10,6 @@ class Event extends Model
 {
     use HasFactory;
 
-    /*
-$table->string('name');
-            $table->text('description')->nullable();
-            $table->string('location_reference')->default('');
-            $table->char('ubication')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('is_active')->default(1);
-            $table->date('date');
-
-    */
-
     protected $fillable = [
         'name',
         'description',

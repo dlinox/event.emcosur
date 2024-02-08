@@ -38,6 +38,7 @@ Route::get('/ticket', [CustomersController::class, 'ticket'])->name('ticket');
 Route::post('/sales', [SaleController::class, 'storeOnline'])->name('store.online');
 
 
+
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
     Route::post('/sign-in', [AuthController::class, 'signIn'])->name('sign-in')->middleware('guest');
@@ -49,13 +50,12 @@ Route::name('auth.')->prefix('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->name('a.')->prefix('a')->group(function () {
     Route::get('',  [AdminController::class, 'index'])->name('index');
 
-
     //delete "/a/sales";
     Route::delete('/sales/{id}', [SaleController::class, 'destroy'])->name('sales.destroy');
-    
+
     //sendEmail
     Route::post('/sales/{id}/send-email', [SaleController::class, 'sendEmail'])->name('sales.send-email');
-    
+
 
     // Route::resource('users', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('events', EventController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
@@ -83,4 +83,5 @@ Route::middleware(['auth', 'sales'])->name('sa.')->prefix('sa')->group(function 
 
 Route::middleware(['auth', 'control'])->name('co.')->prefix('co')->group(function () {
     Route::get('',  [ControlController::class, 'index'])->name('index');
+    Route::get('/show-sale-details/{id}', [ControlController::class, 'showSaleDetails'])->name('show-sale-details');
 });

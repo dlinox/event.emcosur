@@ -306,7 +306,7 @@
                                     background-color="primary"
                                     dark
                                 >
-                                    <v-tab value="card"> Tranferencia</v-tab>
+                                    <v-tab value="card"> Transferencia</v-tab>
                                     <!-- <v-tab value="yape"> Yape</v-tab> -->
                                 </v-tabs>
                             </template>
