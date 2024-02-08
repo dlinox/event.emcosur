@@ -16,7 +16,8 @@ class SalesController extends Controller
 
         //with customers
         //con join agragar el nomnre del evento
-        $salesPending = Sale::where('status', 'pending')->join('events', 'sales.event_id', '=', 'events.id')->with('customer')->get();
+        $salesPending = Sale::select('sales.*', 'events.name as eventName')->
+        where('status', 'pending')->join('events', 'sales.event_id', '=', 'events.id')->with('customer')->get();
 
         // $salesPending = Sale::where('status', 'pending')->with('customer')->get();
 

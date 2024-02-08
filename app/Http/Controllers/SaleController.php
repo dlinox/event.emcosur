@@ -257,6 +257,8 @@ class SaleController extends Controller
         DB::beginTransaction();
         try {
             $sale = Sale::find($id);
+
+            var_dump($sale);
             $sale->status = 'canceled';
             $sale->save();
 

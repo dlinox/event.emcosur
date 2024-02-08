@@ -174,6 +174,10 @@ const confirmOnlinePayment = (sale) => {
 };
 
 const cancel = (sale) => {
+
+    console.log(sale);
+
+
     router.put("/sa/sales/" + sale.id + "/cancel", null, {
         onSuccess: () => {
             reviewDialog.value = false;

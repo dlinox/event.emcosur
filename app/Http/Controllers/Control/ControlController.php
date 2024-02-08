@@ -24,18 +24,28 @@ class ControlController extends Controller
     {
 
         try {
-            $saleDetail = SaleDetail::select('events.name', 'grandstands.name', 'seats.name', 'seats.id', 'seats.price', 'sales.status', 'sales.id')
+            $saleDetail = SaleDetail::select(
+                'events.name as eventName',
+                'grandstands.id as grandstandId ',
+                'grandstands.name as grandstandName',
+                'seats.name as seatName',
+                'seats.id as seatId',
+                'seats.price as seatPrice',
+                'sales.status as saleStatus',
+                'sales.id as saleId',
+            )
                 ->join('seats', 'seats.id', '=', 'sale_details.seat_id')
                 ->join('grandstands', 'grandstands.id', '=', 'seats.grandstand_id')
-                ->join('events', 'events.id', '=', 'grandstands.events_id')
+                ->join('events', 'events.id', '=', 'grandstands.event_id')
                 ->join('sales', 'sales.id', '=', 'sale_details.sale_id')
-                ->where('sale.id', $id)
+                ->where('sales.id', $id)
                 ->get();
 
             if ($saleDetail) {
                 return response()->json([
                     'success' => 'ok',
                     'data' => $saleDetail,
+                    'id' => $id
                 ]);
             }
 
@@ -48,7 +58,8 @@ class ControlController extends Controller
 
             return response()->json([
                 'success' => 'error',
-                'error' => $th->getMessage()
+                'error' => $th->getMessage(),
+                'id' => $id
             ]);
         }
     }

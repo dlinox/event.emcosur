@@ -38,7 +38,7 @@ class SaleDetail extends Model
 
     public function getSeatNameAttribute()
     {
-        return $this->seat->name;
+        return $this->seat ? $this->seat->name :  null;
     }
 
     public function seat()
