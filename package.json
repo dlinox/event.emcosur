@@ -20,6 +20,7 @@
         "qrcode-vue3": "^1.6.8",
         "swiper": "^11.0.5",
         "vue-advanced-cropper": "^2.8.8",
+        "vue-qrcode-reader": "^5.5.2",
         "vuetify": "^3.5.1"
     }
 }
