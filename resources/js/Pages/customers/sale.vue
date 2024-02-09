@@ -625,7 +625,7 @@ const form = ref({
     seats: [],
 });
 
-const limit = ref(10);
+const limit = ref(100);
 
 const seatsSelected = ref([]);
 
