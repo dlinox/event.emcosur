@@ -3,7 +3,6 @@
         <v-container fluid>
             <v-card title="Lector QR">
                 <v-card-text>
-                    
                     <qrcode-stream @detect="onDetect"></qrcode-stream>
                     {{ qrResult }}
                 </v-card-text>
@@ -48,7 +47,9 @@
                         </v-list-item-title>
                         <template v-slot:append>
                             <v-btn
-                                :color="item?.seatIsUsed ? 'success' : 'primary'"
+                                :color="
+                                    item?.seatIsUsed ? 'success' : 'primary'
+                                "
                                 variant="tonal"
                                 density="comfortable"
                                 @click="
@@ -103,7 +104,7 @@ const onDetect = async (decoded) => {
     details.value = null;
     customer.value = null;
 
-    await getDetails(decoded.rawValue);
+    await getDetails(decoded[0].rawValue);
     dialogDatails.value = true;
 };
 
