@@ -584,6 +584,7 @@ const statusSeat = {
     available: { title: "Disponible", color: "black", variant: "outlined" },
     reserved: { title: "Reservado", color: "warning", variant: "flat" },
     sold: { title: "Vendido", color: "error", variant: "flat" },
+    displacement: { title: "Desplazamiento", color: "grey", variant: "flat" },
 };
 
 const saleConfirmModal = ref(false);

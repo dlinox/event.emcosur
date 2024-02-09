@@ -205,4 +205,4 @@ const cancel = (sale) => {
     }
 }
 </style>
-```
+
