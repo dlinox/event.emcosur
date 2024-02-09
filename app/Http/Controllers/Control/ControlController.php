@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Control;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\Event;
-use App\Models\Grandstand;
-use App\Models\Sale;
 use App\Models\SaleDetail;
 use App\Models\Seat;
 use Illuminate\Http\Request;

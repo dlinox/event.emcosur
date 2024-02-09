@@ -206,8 +206,8 @@ class SaleController extends Controller
 
             $mail = new ConfirmMail($dataMail);
             //con copia 
-            // Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
-            Mail::to([$customer->email, ])->send($mail);
+            Mail::to([$customer->email, 'kf.emcosur@gmail.com'])->send($mail);
+            // Mail::to([$customer->email, ])->send($mail);
 
             DB::commit();
             return redirect()->back()->with('success', '¡Gracias por tu compra! la estamos procesando, en breve le lleagará un correo con los detalles de su compra, no olvides revisar tu bandeja de spam.');
