@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Customers;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Grandstand;
+use App\Models\SaleDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 
 class CustomersController extends Controller
@@ -50,9 +52,33 @@ class CustomersController extends Controller
     {
 
         $hash = $request->hash;
+        //desencriptar hash
+        $decrypted = decrypt($hash);
 
+        $saleDetail = SaleDetail::select(
+            'events.name as eventName',
+            'grandstands.id as grandstandId ',
+            'grandstands.name as grandstandName',
+            'seats.name as seatName',
+            'seats.id as seatId',
+            'seats.is_used as seatIsUsed',
+            'seats.price as seatPrice',
+            'sales.status as saleStatus',
+            'sales.id as saleId',
+        )
+            ->join('seats', 'seats.id', '=', 'sale_details.seat_id')
+            ->join('grandstands', 'grandstands.id', '=', 'seats.grandstand_id')
+            ->join('events', 'events.id', '=', 'grandstands.event_id')
+            ->join('sales', 'sales.id', '=', 'sale_details.sale_id')
+            ->where('sales.id', $decrypted)
+            ->get();
+
+        
+        
         return Inertia::render('customers/ticket', [
             'hash' => $hash,
+            'saleDetail' => $saleDetail,
+
         ]);
     }
 }

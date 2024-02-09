@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->enum('status', ['available', 'reserved', 'sold'])->default('available');
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_used')->default(false);
             $table->unsignedBigInteger('grandstand_id');
             $table->foreign('grandstand_id')->references('id')->on('grandstands')->onDelete('restrict')->onUpdate('no action');
 

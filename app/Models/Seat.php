@@ -15,13 +15,15 @@ class Seat extends Model
         'number',
         'price',
         'status',
-        'is_active',
         'grandstand_id',
+        'is_active',
+        'is_used'
     ];
 
     protected $casts = [
         'number' => 'integer',
         'is_active' => 'boolean',
+        'is_used' => 'boolean',
         'grandstand_id' => 'integer',
     ];
 

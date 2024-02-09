@@ -22,12 +22,12 @@ class Customer extends Model
     */
 
     protected $fillable = [
-        'name',
-        'last_name',
-        'document_type',
-        'document_number',
-        'email',
-        'phone',
+            'name',
+            'last_name',
+            'document_type',
+            'document_number',
+            'email',
+            'phone',
         'place_of_residence',
         'is_active'
     ];

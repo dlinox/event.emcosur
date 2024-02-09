@@ -84,4 +84,6 @@ Route::middleware(['auth', 'sales'])->name('sa.')->prefix('sa')->group(function 
 Route::middleware(['auth', 'control'])->name('co.')->prefix('co')->group(function () {
     Route::get('',  [ControlController::class, 'index'])->name('index');
     Route::get('/show-sale-details/{id}', [ControlController::class, 'showSaleDetails'])->name('show-sale-details');
+    //markAsUsed
+    Route::post('/sales/mark-as-used', [ControlController::class, 'markAsUsed'])->name('mark-as-used');
 });
