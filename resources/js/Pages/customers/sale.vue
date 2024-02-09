@@ -167,6 +167,9 @@
                                                             : seat.status ===
                                                               "selected"
                                                             ? "Seleccionado"
+                                                            : seat.status ===
+                                                              "displacement"
+                                                            ? "Desplazamiento"
                                                             : "Disponible"
                                                     }}
                                                 </p>
