@@ -4,7 +4,7 @@
             <v-card title="Lector QR">
                 <v-card-text>
                     <qrcode-stream @detect="onDetect"></qrcode-stream>
-                    {{ qrResult[0] }}
+             
                 </v-card-text>
             </v-card>
         </v-container>
