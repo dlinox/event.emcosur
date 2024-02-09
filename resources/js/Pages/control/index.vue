@@ -3,7 +3,9 @@
         <v-container fluid>
             <v-card title="Lector QR">
                 <v-card-text>
+                    
                     <qrcode-stream @detect="onDetect"></qrcode-stream>
+                    <QrcodeCapture @detect="onDetect" />
                 </v-card-text>
             </v-card>
         </v-container>
@@ -99,7 +101,7 @@ const onDetect = async (decoded) => {
     details.value = null;
     customer.value = null;
 
-    await getDetails(decoded);
+    await getDetails(decoded.rawValue);
     dialogDatails.value = true;
 };
 
