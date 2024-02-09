@@ -5,7 +5,7 @@
                 <v-card-text>
                     
                     <qrcode-stream @detect="onDetect"></qrcode-stream>
-                    <QrcodeCapture @detect="onDetect" />
+                    {{ qrResult }}
                 </v-card-text>
             </v-card>
         </v-container>
@@ -94,9 +94,11 @@ const props = defineProps({
 
 const dialogDatails = ref(false);
 // const details = ref(null);
+const qrResult = ref(null);
 
 const onDetect = async (decoded) => {
     console.log(decoded);
+    qrResult.value = decoded;
 
     details.value = null;
     customer.value = null;
