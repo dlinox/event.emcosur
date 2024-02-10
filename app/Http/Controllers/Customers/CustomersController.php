@@ -15,7 +15,14 @@ class CustomersController extends Controller
     public function index()
     {
 
-        $vents = Event::where('is_active', 1)->with('grandstands')->get();
+        
+        //traert todos los evntos activos con sus tribunas que tambien esten activas
+
+        $vents = Event::with(['grandstands' => function ($queryGrandstand) {
+            $queryGrandstand->active();
+        }])->active()->get();
+
+
         return Inertia::render('customers/index', [
             'events' => $vents,
         ]);
