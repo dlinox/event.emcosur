@@ -84,10 +84,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <pre>
 
-            {{ salesPending }}
-        </pre>
 
         <v-dialog v-model="reviewDialog" max-width="800" persistent scrollable>
             <v-card title="Revisar venta">
