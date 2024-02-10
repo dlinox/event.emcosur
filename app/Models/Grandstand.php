@@ -42,6 +42,14 @@ class Grandstand extends Model
         return $this->belongsTo(Event::class);
     }
 
+    // solo mostrar si esta activo en todas las consultas
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    
+
 
 
     //seats

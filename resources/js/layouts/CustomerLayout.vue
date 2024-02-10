@@ -4,7 +4,7 @@
             <slot />
         </v-main>
         <footer class="footer">
-        <div class="container">
+        <v-container >
             <v-row>
                 <v-col cols="12" md="3"> </v-col>
                 <v-col cols="6" md="6">
@@ -60,7 +60,7 @@
                     </div>
                 </v-col>
             </v-row>
-        </div>
+        </v-container>
         <div class="copy">
             <span>© 2024 EMCOSUR K&F. Todos los derechos reservados.</span>
         </div>

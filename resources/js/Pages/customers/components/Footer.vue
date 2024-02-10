@@ -1,6 +1,7 @@
+
 <template>
     <footer class="footer">
-        <div class="container">
+        <v-Container >
             <v-row>
                 <v-col cols="12" md="3"> </v-col>
                 <v-col cols="6" md="6">
@@ -56,7 +57,7 @@
                     </div>
                 </v-col>
             </v-row>
-        </div>
+        </v-Container>
         <div class="copy">
             <span>© 2024 EMCOSUR K&F. Todos los derechos reservados.</span>
         </div>
@@ -69,6 +70,7 @@ $secondary: #00afef;
 $third: #faab33;
 .footer {
     background-color: $secondary;
+    width: 100%;
     .cc_ {
         padding: 3rem 0;
         display: flex;

@@ -2,18 +2,20 @@
     <v-app id="inspire">
         <Header></Header>
 
-        <v-row no-gutters>
-            <v-col cols="12">
-                <HeroSlider></HeroSlider>
-            </v-col>
-            <v-col cols="3">
-                <!-- <FlayerSlider></FlayerSlider> -->
-            </v-col>
-        </v-row>
+        <div class="w-100">
+            <v-row no-gutters>
+                <v-col cols="12">
+                    <HeroSlider></HeroSlider>
+                </v-col>
+                <v-col cols="3">
+                    <!-- <FlayerSlider></FlayerSlider> -->
+                </v-col>
+            </v-row>
+        </div>
 
         <v-main id="tickets" class="bg-grey-lighten-3">
             <v-card rounded="0">
-                <v-row class="row">
+                <v-row >
                     <v-col
                         cols="12"
                         sm="6"
@@ -102,7 +104,7 @@
 
         <v-dialog width="700" v-model="dialog">
             <v-card title="Seleccione una tribuna ">
-                <img src="/images/tribunas.png" width="100%" />
+                <img src="/images/tribunas2.png" width="100%" />
 
                 <v-list-item
                     class="mt-3"
