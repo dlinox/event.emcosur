@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('row', 1);
             $table->integer('number');
             $table->decimal('price', 8, 2);
-            $table->enum('status', ['available', 'reserved', 'sold'])->default('available');
+            $table->enum('status', ['available', 'reserved', 'sold', 'displacement'])->default('available');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_used')->default(false);
             $table->unsignedBigInteger('grandstand_id');

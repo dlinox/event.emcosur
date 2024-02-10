@@ -75,13 +75,14 @@ class SaleController extends Controller
             $customer = Customer::create($request->customer);
 
             $sale = Sale::create([
-                'status' => 'completed',
+                'status' => $request->option === 'sold' ? 'completed' : 'pending',
                 'payment_type' => 'cash',
                 'payment_method' => 'cash',
                 'payment_date' => now(),
                 'payment_amount' => $request->payment_amount,
                 'event_id' => $request->event,
                 'customer_id' => $customer->id,
+                'observation' => $request->observation,
                 'user_id' => Auth::user()->id,
             ]);
 
@@ -103,12 +104,12 @@ class SaleController extends Controller
                     throw new \Exception('El asiento ' . $seat->name . ' ya fue vendido o reservado');
                 }
 
-                $seat->status = 'sold';
+                $seat->status = $request->option === 'sold' ? 'completed' : 'reserved';
                 $seat->save();
             }
 
             $event = Event::select()->where('id', $request->event)->first();
-            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(seats.name) as seats'))
                 ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
                 ->whereIn('grandstands.id', $grandstandsIDs)
                 ->whereIn('seats.id', $request->seats)
@@ -190,7 +191,7 @@ class SaleController extends Controller
             }
 
             $event = Event::select()->where('id', $request->event)->first();
-            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(seats.name) as seats'))
                 ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
                 ->whereIn('grandstands.id', $grandstandsIDs)
                 ->whereIn('seats.id', $request->seats)
@@ -278,15 +279,14 @@ class SaleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sale $sale)
+    public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sale $sale)
+    public function edit($id)
     {
         //
     }
@@ -299,9 +299,7 @@ class SaleController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($id)
     {
         DB::beginTransaction();
@@ -342,7 +340,7 @@ class SaleController extends Controller
 
             $customer = Customer::find($sale->customer_id);
 
-            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(CONCAT(seats.name ," - S/.", seats.price)) as seats'))
+            $grandstands = Grandstand::select('grandstands.name', DB::raw('GROUP_CONCAT(seats.name) as seats'))
                 ->join('seats', 'grandstands.id', '=', 'seats.grandstand_id')
                 ->where('seats.id', $saleDetail->seat_id)
                 ->groupBy('grandstands.id')

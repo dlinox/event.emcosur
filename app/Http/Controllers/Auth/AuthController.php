@@ -19,26 +19,25 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
 
-            if (Auth::user()->role === 'admin') {
-                return redirect('/a/events');
-            } else if (Auth::user()->role === 'support') {
+            if (auth()->user()->role === 'admin') {
+                return redirect('/a');
+            } else if (auth()->user()->role === 'support') {
                 return redirect('/su');
-            } else if (Auth::user()->role === 'control') {
+            } else if (auth()->user()->role === 'control') {
                 return redirect('/co');
-            } else if (Auth::user()->role === 'sales') {
+            } else if (auth()->user()->role === 'sales') {
                 return redirect('/sa');
             } else {
 
                 auth()->logout();
 
-                return back()->with([
-                    "errors" => 'Ocurrio un error al intentar iniciar sesión.',
+                return back()->withErrors([
+                    'error' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
                 ]);
-             
             }
         }
-        return back()->with([
-            "errors" => 'Ocurrio un error al intentar iniciar sesión.',
+        return back()->withErrors([
+            'error' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
         ]);
     }
     public function signUp()

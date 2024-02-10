@@ -38,6 +38,8 @@ Route::get('/ticket', [CustomersController::class, 'ticket'])->name('ticket');
 Route::post('/sales', [SaleController::class, 'storeOnline'])->name('store.online');
 
 
+//reportEvent
+Route::get('/report-event', [AdminController::class, 'reportEvent'])->name('report-event')->middleware('auth');
 
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');

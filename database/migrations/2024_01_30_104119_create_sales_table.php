@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('payment_image')->nullable();
             $table->string('payment_bank')->nullable();
             $table->char('payment_currency', 3)->default('PEN');
-
+            $table->text('observation')->nullable();
             $table->boolean('is_active')->default(true);
 
             $table->unsignedBigInteger('event_id');

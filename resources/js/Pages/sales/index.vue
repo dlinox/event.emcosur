@@ -37,6 +37,7 @@
                     <v-table>
                         <thead>
                             <tr>
+                                <th class="text-left">Origen</th>
                                 <th class="text-left">Nombre</th>
                                 <th class="text-left">Pago</th>
                                 <th class="text-left">Fecha</th>
@@ -46,6 +47,20 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in salesPending" :key="item.name">
+                                <td>
+                                    <v-chip
+                                        :color="item.payment_type === 'online' ? 'blue' : 'scale'"
+                                        text-color="white"
+                                        label
+                                    >
+                                        {{
+                                            item.payment_type === "online"
+                                                ? "Online"
+                                                : "Presencial"
+                                        }}
+                                    </v-chip>
+                                </td>
+
                                 <td>
                                     {{ item.customer.name }}
                                     {{ item.customer.last_name }}
@@ -69,8 +84,11 @@
                 </v-col>
             </v-row>
         </v-container>
+        <pre>
 
-        
+            {{ salesPending }}
+        </pre>
+
         <v-dialog v-model="reviewDialog" max-width="800" persistent scrollable>
             <v-card title="Revisar venta">
                 <v-card-text>
@@ -101,10 +119,14 @@
                                 title="Monto"
                                 :subtitle="itemReview.payment_amount"
                             ></v-list-item>
-                       
+
                             <v-list-item
                                 title="Nombres"
-                                :subtitle="itemReview.customer.name + ' ' + itemReview.customer.last_name"
+                                :subtitle="
+                                    itemReview.customer.name +
+                                    ' ' +
+                                    itemReview.customer.last_name
+                                "
                             ></v-list-item>
 
                             <v-list-item
@@ -112,7 +134,10 @@
                                 :subtitle="itemReview.customer.phone"
                             ></v-list-item>
 
-
+                            <v-list-item
+                                title="Observaciones"
+                                :subtitle="itemReview.observation"
+                            ></v-list-item>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -147,7 +172,7 @@
 import SalesLayout from "@/layouts/SalesLayout.vue";
 import { router } from "@inertiajs/vue3";
 import DialogConfirm from "@/components/DialogConfirm.vue";
-import {  ref } from "vue";
+import { ref } from "vue";
 const props = defineProps({
     salesPending: Array,
     events: Array,
@@ -162,11 +187,6 @@ const reviewSale = (sale) => {
     reviewDialog.value = true;
 };
 
-//cancel
-//  Route::put('/sales/{id}/cancel', [SaleController::class, 'cancel'])->name('cancel');
-//confirmOnlinePayment
-// Route::put('/sales/{id}/confirm-online-payment', [SaleController::class, 'confirmOnlinePayment'])->name('confirm-online-payment');
-
 const confirmOnlinePayment = (sale) => {
     router.put("/sa/sales/" + sale.id + "/confirm-online-payment", null, {
         onSuccess: () => {
@@ -176,9 +196,7 @@ const confirmOnlinePayment = (sale) => {
 };
 
 const cancel = (sale) => {
-
     console.log(sale);
-
 
     router.put("/sa/sales/" + sale.id + "/cancel", null, {
         onSuccess: () => {
@@ -207,4 +225,3 @@ const cancel = (sale) => {
     }
 }
 </style>
-

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Grandstand;
 use App\Models\Sale;
+use App\Models\SaleDetail;
+use App\Models\Seat;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -51,5 +55,45 @@ class AdminController extends Controller
         ]);
     }
 
+    public function reportEvent()
+    {
+        $events = Event::select('id', 'name')->where('is_active', true)->get()->map(function ($event) {
+            return [
+                'id' => $event->id,
+                'name' => $event->name,
+                'grandstands' => Grandstand::select('id', 'name')->where('event_id', $event->id)->get()->map(function ($grandstand) use ($event) {
+                    return [
+                        'id' => $grandstand->id,
+                        'name' => $grandstand->name,
+                        'seatsSold' => SaleDetail::join('seats', 'sale_details.seat_id', '=', 'seats.id')
+                            ->join('grandstands', 'seats.grandstand_id', '=', 'grandstands.id')
+                            ->where('grandstands.id', $grandstand->id)
+                            ->where('grandstands.event_id', $event->id)
+                            ->where('seats.status', 'sold')
+                            ->count(),
 
+                        'seatsSold2' => Seat::where('grandstand_id', $grandstand->id)
+                            ->where('status', '=', 'sold')
+                            ->count(),
+
+                        'seatsReserved' => Seat::where('grandstand_id', $grandstand->id)
+                            ->where('status', '=', 'reserved')
+                            ->count(),
+
+                        'seatsAvailable'  => Seat::where('grandstand_id', $grandstand->id)
+                            ->where('status', '=', 'available')
+                            ->count(),
+
+
+                        'totalSeats' => Seat::where('grandstand_id', $grandstand->id)
+                            ->where('status', '!=', 'displacement')
+                            ->count(),
+
+                    ];
+                }),
+            ];
+        });
+
+        return response()->json($events);
+    }
 }

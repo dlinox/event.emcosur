@@ -119,7 +119,7 @@
 
         <v-container fluid>
             <v-row>
-                <v-col cols="12" md="8">
+                <v-col cols="12" md="4">
                     <v-card variant="tonal">
                         <v-toolbar
                             title="Asisentos Selecionados"
@@ -158,7 +158,7 @@
                         </v-card-text>
                     </v-card>
                 </v-col>
-                <v-col cols="12" md="4">
+                <v-col cols="12" md="8">
                     <v-card variant="tonal">
                         <v-toolbar
                             title="Detalles de la venta"
@@ -168,21 +168,21 @@
                         <v-container>
                             <v-form ref="formRef">
                                 <v-row>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-text-field
                                             v-model="form.customer.name"
                                             label="Nombre"
                                             :rules="rulesName"
                                         />
                                     </v-col>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-text-field
                                             v-model="form.customer.last_name"
                                             label="Apellidos"
                                             :rules="rulesName"
                                         />
                                     </v-col>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-select
                                             v-model="
                                                 form.customer.document_type
@@ -192,7 +192,7 @@
                                             :rules="ruleRequired"
                                         />
                                     </v-col>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-text-field
                                             v-model="
                                                 form.customer.document_number
@@ -201,18 +201,35 @@
                                             :rules="rulesDocumentNumber"
                                         />
                                     </v-col>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-text-field
                                             v-model="form.customer.email"
                                             label="Correo"
                                             :rules="ruleEmail"
                                         />
                                     </v-col>
-                                    <v-col cols="12">
+                                    <v-col cols="12" md="6">
                                         <v-text-field
                                             v-model="form.customer.phone"
                                             label="Telefono"
                                             :rules="rulePhone"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12" >
+                                        <v-textarea
+                                            v-model="form.observation"
+                                            label="Observaciones"
+                                            rows="2"
+                                        />
+                                    </v-col>
+                                    <v-col cols="12" md="6"></v-col>
+                                    <v-col cols="12" md="6">
+                                        <v-select
+                                            v-model="form.option"
+                                            :items="saleOptions"
+                                            label="Tipo de venta"
+                                            :rules="ruleRequired"
+                                            :clearable="false"
                                         />
                                     </v-col>
                                 </v-row>
@@ -321,8 +338,15 @@ const type_documets = [
     { title: "PASAPORTE", value: "PASSPORT" },
 ];
 
+const saleOptions = [
+    { title: "Vender", value: "sold" },
+    { title: "Reservar", value: "reserved" },
+];
+
 const form = ref({
     payment_amount: 0,
+    observation: null,
+    option: "sold",
     customer: {
         name: null,
         last_name: null,
