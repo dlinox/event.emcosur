@@ -9,25 +9,13 @@ class Customer extends Model
 {
     use HasFactory;
 
-    /*
-            $table->string('name');
-            $table->string('last_name');
-            $table->enum('document_type', ['DNI', 'RUC', 'CE', 'PASSPORT'])->default('DNI');
-            $table->string('document_number');
-            $table->string('email');
-            $table->integer('phone');
-            $table->string('place_of_residence')->nullable();
-            $table->boolean('is_active')->default(true);
-
-    */
-
     protected $fillable = [
-            'name',
-            'last_name',
-            'document_type',
-            'document_number',
-            'email',
-            'phone',
+        'name',
+        'last_name',
+        'document_type',
+        'document_number',
+        'email',
+        'phone',
         'place_of_residence',
         'is_active'
     ];
@@ -36,5 +24,21 @@ class Customer extends Model
         'phone' => 'integer',
         'place_of_residence' => 'string',
         'is_active' => 'boolean'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'place_of_residence',
+    ];
+
+    public $headers =  [
+        ['text' => "ID", 'value' => "id", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Nombre", 'value' => "name", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Apellido", 'value' => "last_name", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Tipo de Documento", 'value' => "document_type", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Número de Documento", 'value' => "document_number", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Correo Electrónico", 'value' => "email", 'short' => false, 'order' => 'ASC'],
+        ['text' => "Teléfono", 'value' => "phone", 'short' => false, 'order' => 'ASC'],
     ];
 }

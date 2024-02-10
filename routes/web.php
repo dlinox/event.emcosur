@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Control\ControlController;
-
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Customers\CustomersController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SaleController;
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 //mail test
 
 use App\Mail\TestMail;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/mail', function () {
@@ -61,6 +62,8 @@ Route::middleware(['auth', 'admin'])->name('a.')->prefix('a')->group(function ()
 
     // Route::resource('users', AdminController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('events', EventController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
+
+    Route::resource('customers', CustomerController::class)->only(['index', 'create', 'store', 'update', 'destroy']);
 });
 
 Route::middleware(['auth', 'support'])->name('su.')->prefix('su')->group(function () {

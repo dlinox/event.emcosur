@@ -116,6 +116,13 @@ const menuMain = [
         to: "/a/events",
         group: null,
     },
+    {
+        title: "Clientes",
+        value: "customers",
+        icon: "mdi-inbox-arrow-down-outline",
+        to: "/a/customers",
+        group: null,
+    },
 ];
 
 const { mobile } = useDisplay();
