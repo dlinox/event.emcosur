@@ -104,7 +104,7 @@ class SaleController extends Controller
                     throw new \Exception('El asiento ' . $seat->name . ' ya fue vendido o reservado');
                 }
 
-                $seat->status = $request->option === 'sold' ? 'completed' : 'reserved';
+                $seat->status = $request->option === 'sold' ? 'sold' : 'reserved';
                 $seat->save();
             }
 
