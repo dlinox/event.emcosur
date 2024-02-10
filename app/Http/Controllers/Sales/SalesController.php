@@ -16,12 +16,16 @@ class SalesController extends Controller
 
         //with customers
         //con join agragar el nomnre del evento
-        $salesPending = Sale::select('sales.*', 'events.name as eventName')->
-        where('status', 'pending')->join('events', 'sales.event_id', '=', 'events.id')->with('customer')->get();
+        $salesPending = Sale::select('sales.*', 'events.name as eventName')->where('status', 'pending')->join('events', 'sales.event_id', '=', 'events.id')->with('customer')->get();
 
         // $salesPending = Sale::where('status', 'pending')->with('customer')->get();
 
         $events = Event::where('is_active', true)->get();
+
+        // $events = Event::with(['grandstands' => function ($queryGrandstand) {
+        //     $queryGrandstand->where('is_active', true);
+        // }])->where('is_active', true)->get();
+
 
         return Inertia::render('sales/index', [
             'salesPending' => $salesPending,
@@ -32,6 +36,8 @@ class SalesController extends Controller
     public function events()
     {
 
+        
+
         $events = Event::where('is_active', true)->get();
 
         return Inertia::render('sales/events/index', ['items' => $events,]);
@@ -41,15 +47,15 @@ class SalesController extends Controller
 
     public function show($id)
     {
-        // le evento con sus grandstands y sus asientos
-        $event = Event::with('grandstands.seats')->find($id);
 
 
-        //seats where grandstand_id in 1, 2
+        $event = Event::with(['grandstands' => function ($queryGrandstand) {
+            $queryGrandstand->where('is_active', true)->with('seats');
+        }])->where('id', $id)->first();
 
-        // $seats = Seat::whereIn('grandstand_id', [1, 2])->get();
-        $seats = Seat::whereIn('grandstand_id', $event->grandstands->pluck('id'))->get();
 
-        return Inertia::render('sales/events/show', ['item' => $event, 'seats' => $seats,]);
+        // $event = Event::with('grandstands.seats')->find($id);
+
+        return Inertia::render('sales/events/show', ['item' => $event]);
     }
 }

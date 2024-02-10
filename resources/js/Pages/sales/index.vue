@@ -55,7 +55,8 @@
                                     {{ item.payment_bank }}
                                 </td>
                                 <td>{{ item.payment_date }}</td>
-                                <td>{{ item.name }}</td>
+
+                                <td>{{ item.eventName }}</td>
 
                                 <td>
                                     <v-btn @click="reviewSale(item)"
@@ -69,6 +70,7 @@
             </v-row>
         </v-container>
 
+        
         <v-dialog v-model="reviewDialog" max-width="800" persistent scrollable>
             <v-card title="Revisar venta">
                 <v-card-text>
