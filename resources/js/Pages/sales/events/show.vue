@@ -54,9 +54,9 @@
 
         <v-window v-model="tab" direction="vertical">
             <v-window-item
-                v-for="(tab_, w) in item?.grandstands"
-                :key="w"
-                :value="w"
+                v-for="(tab_, grandstandIndex) in item?.grandstands"
+                :key="grandstandIndex"
+                :value="grandstandIndex"
                 vertical
             >
                 <v-container fluid>
@@ -82,35 +82,28 @@
                                     </td>
                                     <td
                                         class="pa-1"
-                                        v-for="(seat, indexSeat) in item.seats"
+                                        v-for="(seat, indexCol) in item.seats"
                                     >
                                         <v-btn
                                             icon
                                             density="comfortable"
-                                            :variant="
-                                                seatsSelected.find(
-                                                    (s) => s.id == seat.id
-                                                ) || seat.status == 'sold'
-                                                    ? 'flat'
-                                                    : 'outlined'
-                                            "
-                                            :color="
-                                                seat.status === 'sold'
-                                                    ? 'error'
-                                                    : seatsSelected.find(
-                                                          (s) => s.id == seat.id
-                                                      )
-                                                    ? 'primary'
-                                                    : 'black'
+                                            :variant="statusSeat[seat.status].variant"
+                                            :color="statusSeat[seat.status].color
                                             "
                                             @click="
                                                 seat.status === 'sold' ||
                                                 seat.status === 'reserved'
                                                     ? null
-                                                    : onSeatSelected(tab_, seat)
+                                                    : onSeatSelected(
+                                                          tab_,
+                                                          seat,
+                                                          grandstandIndex,
+                                                          indexRow,
+                                                          indexCol
+                                                      )
                                             "
                                         >
-                                            <small>{{ seat.name }}</small>
+                                            <small> {{ seat.name }} </small>
                                         </v-btn>
                                     </td>
                                 </tr>
@@ -120,7 +113,6 @@
                 </v-container>
             </v-window-item>
         </v-window>
-
         <div class="calle">
             <span> Av. Simon Bolivar </span>
         </div>
@@ -369,6 +361,17 @@ const ruleRequired = [(v) => !!v || "El campo es requerido"];
 
 const seatsSelected = ref([]);
 
+
+
+const statusSeat = {
+    selected: { title: "Seleccionado", color: "primary", variant: "flat" },
+    available: { title: "Disponible", color: "black", variant: "outlined" },
+    reserved: { title: "Reservado", color: "warning", variant: "flat" },
+    sold: { title: "Vendido", color: "error", variant: "flat" },
+    displacement: { title: "Desplazamiento", color: "grey", variant: "flat" },
+};
+
+
 const rowsColor = {
     A: "blue-lighten",
     B: "blue-lighten",
@@ -402,16 +405,35 @@ const registerSale = async () => {
 
 const removeSeat = (seat) => {
     seatsSelected.value = seatsSelected.value.filter((s) => s.id !== seat.id);
+    let grandstand = props.item.grandstands.find(
+        (g) => g.id === seat.grandstand.id
+    );
+    let indexSeat = grandstand.seats.findIndex((s) => s.id === seat.id);
+    grandstand.seats[indexSeat].status = "available";
 };
 
-const onSeatSelected = (grandstand, seat) => {
-    const seatSelected = seatsSelected.value.find((s) => s.id === seat.id);
+const onSeatSelected = (
+    grandstand,
+    seat,
+    grandstandIndex,
+    indexRow,
+    indexCol
+) => {
+    //!Si cambia segun al orientacion de la tabla
+    let numCols = grandstand.seats.length / grandstand.rows;
+    let indexSeat = (grandstand.rows - 1 - indexRow) * numCols + indexCol;
+
+
+    let seatSelected = props.item.grandstands[grandstandIndex].seats[indexSeat].status === "selected" ? true : false;
 
     if (seatSelected) {
         seatsSelected.value = seatsSelected.value.filter(
             (s) => s.id !== seat.id
         );
+        props.item.grandstands[grandstandIndex].seats[indexSeat].status = "available";
     } else {
+
+        props.item.grandstands[grandstandIndex].seats[indexSeat].status = "selected";
         seatsSelected.value.push({
             id: seat.id,
             grandstand: {

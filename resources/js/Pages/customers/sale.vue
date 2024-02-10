@@ -680,7 +680,11 @@ const removeSeat = (seat) => {
         0
     );
 
-    seat.status = "available";
+    let grandstand = props.item.grandstands.find(
+        (g) => g.id === seat.grandstand.id
+    );
+    let indexSeat = grandstand.seats.findIndex((s) => s.id === seat.id);
+    grandstand.seats[indexSeat].status = "available";
 };
 
 const onSeatSelected = (grandstand, seat) => {
