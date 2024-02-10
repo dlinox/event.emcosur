@@ -48,12 +48,6 @@ class Grandstand extends Model
         return $query->where('is_active', true);
     }
 
-    
-
-
-
-    //seats
-
     //Undefined array key 1
     public function seats()
     {   
