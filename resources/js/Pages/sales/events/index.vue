@@ -34,7 +34,7 @@
                     <v-card  :title="item.name">
                         <div class="mt-2 px-1" v-for="g in item.grandstands" :key="g.id">
 
-                            <v-btn block @click="router.get('/sa/events/' + item.id + '/grandstand/' + g.id)">
+                            <v-btn variant="tonal" block @click="router.get('/sa/events/' + item.id + '/grandstand/' + g.id)">
                                 {{ g.name }} 
                             
                             </v-btn>

@@ -21,7 +21,7 @@ class SalesController extends Controller
 
         // $salesPending = Sale::where('status', 'pending')->with('customer')->get();
 
-        $events = Event::where('is_active', true)->get();
+        $events = Event::where('is_active', true)->with('grandstands')->get();
 
         // $events = Event::with(['grandstands' => function ($queryGrandstand) {
         //     $queryGrandstand->where('is_active', true);
@@ -37,8 +37,7 @@ class SalesController extends Controller
     public function events()
     {
 
-        
-
+    
         $events = Event::where('is_active', true)->with('grandstands')->get();
 
         return Inertia::render('sales/events/index', ['items' => $events,]);

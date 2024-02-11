@@ -20,6 +20,29 @@
                             {{ event.description }}
                         </v-card-text>
 
+                        <v-card-text>
+                            <div
+                                class="mt-2 px-1"
+                                v-for="g in event.grandstands"
+                                :key="g.id"
+                            >
+                                <v-btn
+                                    variant="tonal"
+                                    block
+                                    @click="
+                                        router.get(
+                                            '/sa/events/' +
+                                                event.id +
+                                                '/grandstand/' +
+                                                g.id
+                                        )
+                                    "
+                                >
+                                    {{ g.name }}
+                                </v-btn>
+                            </div>
+                        </v-card-text>
+
                         <v-card-actions>
                             <v-btn
                                 link
@@ -49,7 +72,11 @@
                             <tr v-for="item in salesPending" :key="item.name">
                                 <td>
                                     <v-chip
-                                        :color="item.payment_type === 'online' ? 'blue' : 'scale'"
+                                        :color="
+                                            item.payment_type === 'online'
+                                                ? 'blue'
+                                                : 'scale'
+                                        "
                                         text-color="white"
                                         label
                                     >
@@ -84,7 +111,6 @@
                 </v-col>
             </v-row>
         </v-container>
-
 
         <v-dialog v-model="reviewDialog" max-width="800" persistent scrollable>
             <v-card title="Revisar venta">
@@ -163,8 +189,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-
     </SalesLayout>
 </template>
 <script setup>
@@ -180,8 +204,6 @@ const props = defineProps({
 const reviewDialog = ref(false);
 
 const itemReview = ref({});
-
-
 
 const reviewSale = (sale) => {
     itemReview.value = sale;
