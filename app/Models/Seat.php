@@ -35,7 +35,7 @@ class Seat extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'is_active',
+        // 'is_active',
     ];
 
     public function getGrandstandNameAttribute()

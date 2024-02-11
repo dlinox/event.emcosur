@@ -84,7 +84,14 @@
                                         class="pa-1"
                                         v-for="(seat, indexCol) in item.seats"
                                     >
+
+                                        <template v-if="!seat.is_active">
+                                            <v-btn  density="comfortable" icon disabled color="white">
+                                                <small> {{ seat.name }} </small>
+                                            </v-btn>
+                                        </template>
                                         <v-btn
+                                            v-else
                                             icon
                                             density="comfortable"
                                             :variant="statusSeat[seat.status].variant"
@@ -315,6 +322,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+    
     </SalesLayout>
 </template>
 <script setup>
