@@ -7,7 +7,7 @@
             </v-btn>
         </v-toolbar>
         <v-container fluid>
-            <v-table>
+            <!-- <v-table>
                 <thead>
                     <tr>
                         <th class="text-left">Titulo</th>
@@ -28,7 +28,21 @@
                         </td>
                     </tr>
                 </tbody>
-            </v-table>
+            </v-table> -->
+            <v-row>
+                <v-col cols="6"  v-for="item in items" :key="item.name">
+                    <v-card  :title="item.name">
+                        <div class="mt-2 px-1" v-for="g in item.grandstands" :key="g.id">
+
+                            <v-btn block @click="router.get('/sa/events/' + item.id + '/grandstand/' + g.id)">
+                                {{ g.name }} 
+                            
+                            </v-btn>
+                        </div>
+
+                    </v-card>
+                </v-col>
+            </v-row>
         </v-container>
     </SalesLayout>
 </template>
@@ -43,4 +57,8 @@ const props = defineProps({
     headers: Array,
     filters: Object,
 });
+
+const selectGrandstand = (event) => {
+    router.get("/sale/" + event.id);
+};
 </script>

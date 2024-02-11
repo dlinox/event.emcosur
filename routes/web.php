@@ -78,6 +78,10 @@ Route::middleware(['auth', 'sales'])->name('sa.')->prefix('sa')->group(function 
     Route::get('/events', [SalesController::class, 'events'])->name('events');
     Route::get('/events/{id}', [SalesController::class, 'show'])->name('show');
     Route::post('/sales', [SaleController::class, 'store'])->name('store');
+    
+    ///sa/events/grandstand/
+
+    Route::get('/events/{event}/grandstand/{id}', [SalesController::class, 'grandstandSale'])->name('grandstand');
 
     //cancel
     Route::put('/sales/{id}/cancel', [SaleController::class, 'cancel'])->name('cancel');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Grandstand;
 use App\Models\Sale;
 use App\Models\Seat;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class SalesController extends Controller
 
         
 
-        $events = Event::where('is_active', true)->get();
+        $events = Event::where('is_active', true)->with('grandstands')->get();
 
         return Inertia::render('sales/events/index', ['items' => $events,]);
     }
@@ -57,5 +58,18 @@ class SalesController extends Controller
         // $event = Event::with('grandstands.seats')->find($id);
 
         return Inertia::render('sales/events/show', ['item' => $event]);
+    }
+
+    //Route::get('/events/grandstand/{id}', [SalesController::class, 'grandstandSale'])->name('grandstand');
+
+    public function grandstandSale($event,$id)
+    {
+        // $grandstand = Grandstand::with('seats')->find($id);
+
+        $event = Event::with(['grandstands' => function ($queryGrandstand) use ($id){
+            $queryGrandstand->where('is_active', true)->where('id', $id)->with('seats');
+        }])->where('id', $event)->first();
+
+        return Inertia::render('sales/events/grandstand', ['item' => $event]);
     }
 }
