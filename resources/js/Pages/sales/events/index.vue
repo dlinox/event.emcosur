@@ -30,7 +30,7 @@
                 </tbody>
             </v-table> -->
             <v-row>
-                <v-col cols="6"  v-for="item in items" :key="item.name">
+                <v-col cols="12"  md="6" v-for="item in items" :key="item.name">
                     <v-card  :title="item.name">
                         <div class="mt-2 px-1" v-for="g in item.grandstands" :key="g.id">
 
