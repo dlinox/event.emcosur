@@ -190,7 +190,17 @@
             <span> Av. Simon Bolivar </span>
         </div>
 
-        <v-container fluid>
+        <v-container v-if="!onlined" fluid>
+            <v-alert type="info" variant="tonal">
+                        <h3>
+                            LAS VENTAS SE REALIZARÁN DE MANERA PRESENCIAL EN LAS
+                            INMEDIACIONES DE
+                            <b><u>AV. SIMÓN BOLÍVAR CON JR. TITICACA.</u> </b>
+                        </h3>
+                    </v-alert>
+        </v-container>
+
+        <v-container v-if="onlined" fluid>
             <v-row>
                 <v-col cols="12" md="4">
                     <v-card>
@@ -517,6 +527,8 @@ const props = defineProps({
     item: Object,
     grandstandId: [String, Number],
 });
+
+const onlined = ref(false);
 
 const finishBuy = ref(false);
 

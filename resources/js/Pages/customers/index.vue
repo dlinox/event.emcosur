@@ -15,7 +15,7 @@
 
         <v-main id="tickets" class="bg-grey-lighten-3">
             <v-card rounded="0">
-                <v-row >
+                <v-row>
                     <v-col
                         cols="12"
                         sm="6"
@@ -103,37 +103,18 @@
         </v-main>
 
         <v-dialog width="700" v-model="dialog">
-            <v-card title="Seleccione una tribuna ">
+            <v-card title="">
                 <img src="/images/tribunas2.png" width="100%" />
 
-                <v-list-item
-                    class="mt-3"
-                    v-for="grandstand in eventSelected.grandstands"
-                    :key="grandstand.id"
-                    :title="grandstand.name"
-                    @click="router.get('/sale/' + grandstand.id)"
-                >
-                    <template v-slot:append>
-                        <v-btn
-                            @click="router.get('/sale/' + grandstand.id)"
-                            variant="tonal"
-                            icon="mdi-arrow-right"
-                            density="comfortable"
-                        >
-                        </v-btn>
-                    </template>
-                </v-list-item>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-
-                    <v-btn
-                        text="Cancelar"
-                        variant="tonal"
-                        color="error"
-                        @click="dialog = !dialog"
-                    ></v-btn>
-                </v-card-actions>
+                <v-card-text>
+                    <v-alert type="info" variant="tonal">
+                        <h3>
+                            LAS VENTAS SE REALIZARÁN DE MANERA PRESENCIAL EN LAS
+                            INMEDIACIONES DE
+                            <b><u>AV. SIMÓN BOLÍVAR CON JR. TITICACA.</u> </b>
+                        </h3>
+                    </v-alert>
+                </v-card-text>
             </v-card>
         </v-dialog>
     </v-app>
