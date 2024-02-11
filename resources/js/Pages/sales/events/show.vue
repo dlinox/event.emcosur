@@ -99,7 +99,8 @@
                                             "
                                             @click="
                                                 seat.status === 'sold' ||
-                                                seat.status === 'reserved'
+                                                seat.status === 'reserved' ||
+                                                seat.status === 'displacement'
                                                     ? null
                                                     : onSeatSelected(
                                                           tab_,
