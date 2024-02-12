@@ -82,7 +82,7 @@
             </v-card>
         </v-container>
         <V-dialog v-model="dialogQr">
-            <v-card title="Lector QR" min-width="600px" class="mx-auto">
+            <v-card title="Lector QR" mx-width="600px" class="mx-auto">
                 <v-card-text>
                     <qrcode-stream @detect="onDetect"></qrcode-stream>
                 </v-card-text>
@@ -99,7 +99,7 @@
                 </v-card-actions>
             </v-card>
         </V-dialog>
-        <V-dialog v-model="dialogDatails" width="600">
+        <V-dialog v-model="dialogDatails" :scrim="false" fullscreen>
             <v-card>
                 <v-card-title>
                     <span class="text-h5">Detalles de la venta</span>
@@ -179,7 +179,7 @@
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="markAsAllUsed">
-                        Marcar todos como usados
+                        Marcar todos 
                     </v-btn>
                 </v-card-actions>
             </v-card>
