@@ -41,6 +41,9 @@ Route::post('/sales', [SaleController::class, 'storeOnline'])->name('store.onlin
 
 //reportEvent
 Route::get('/report-event', [AdminController::class, 'reportEvent'])->name('report-event')->middleware('auth');
+//searchCustomer
+Route::get('/search-customer', [CustomerController::class, 'searchCustomer'])->name('search-customer')->middleware('auth');
+
 
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');

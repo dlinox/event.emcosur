@@ -52,8 +52,11 @@ class ControlController extends Controller
                 'document_type',
                 'document_number',
                 'email',
-                'phone'
-            )->where('id', $saleDetail[0]->customerId)->first();
+                'phone',
+                'sales.status as saleStatus',
+            )
+                ->join('sales', 'sales.customer_id', '=', 'customers.id')
+                ->where('sales.id', $decrypted)->first();
 
             if ($saleDetail) {
                 return response()->json([

@@ -276,28 +276,6 @@ class SaleController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Sale $sale)
-    {
-        //
-    }
 
 
     public function destroy($id)
@@ -363,4 +341,7 @@ class SaleController extends Controller
             return redirect()->back()->withErrors(['error' => 'Se ha producido un error inesperado.', 'details' => $th->getMessage()]);
         }
     }
+
+
+    
 }
